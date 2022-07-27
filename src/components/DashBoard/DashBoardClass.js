@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import SweetAlert from "react-bootstrap-sweetalert";
-const _ = require("lodash");
+import {get} from "lodash"
 
 class DashBoard extends React.Component {
   constructor(props) {
@@ -21,11 +21,11 @@ class DashBoard extends React.Component {
     this.setState({ submit: false });
     this.setState({ toggle: true });
     const userObj = JSON.parse(
-      localStorage.getItem(_.get(this.state.loggedInUserObj, "userName", ""))
+      localStorage.getItem(get(this.state.loggedInUserObj, "userName", ""))
     );
     userObj.isUserLoggedIn = false;
     localStorage.setItem(
-      _.get(this.state.loggedInUserObj, "userName", ""),
+      get(this.state.loggedInUserObj, "userName", ""),
       JSON.stringify(userObj)
     );
   };
@@ -37,41 +37,24 @@ class DashBoard extends React.Component {
   };
 
   componentDidMount() {
-    const loggedInUserName = _.get(this.props.location, "state.userName", {});
+    const loggedInUserName = get(this.props.location, "state.userName", {});
     this.setState({
       loggedInUserObj: JSON.parse(localStorage.getItem(loggedInUserName)),
     });
   }
 
   render() {
-    const localUname = `${_.get(
+    const localUname = `${get(
       this.state.loggedInUserObj,
       "firstName",
       ""
-    )} ${_.get(this.state.loggedInUserObj, "lastName", "")}`;
+    )} ${get(this.state.loggedInUserObj, "lastName", "")}`;
 
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <nav className="navbar navbar-expand-lg bg-info justify-content-between">
           <div className="container">
             <div className="p-2 bg-gradient-dark text-white">Dashboard</div>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarResponsive"
-              aria-controls="navbarResponsive"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarResponsive">
-              <ul className="navbar-nav ml-auto">
-                {/* <li
-                  className="nav-item active text-right"
-                  onClick={this.onLogout}
-                > */}
                   <button
                     type="button"
                     className="btn btn-danger"
@@ -79,9 +62,6 @@ class DashBoard extends React.Component {
                   >
                     LOGOUT
                   </button>
-                {/* </li> */}
-              </ul>
-            </div>
           </div>
         </nav>
 
