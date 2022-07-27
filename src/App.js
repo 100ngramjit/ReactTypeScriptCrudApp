@@ -4,7 +4,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import LogIn from "./components/Login/LogIn";
-import DashBoard from "./components/DashBoard/DashBoard";
+import DashBoard from "./components/DashBoard/DashBoardClass";
 import Register from "./components/Register/Register";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Page404 from "./components/Page404/Page404";
