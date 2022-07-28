@@ -8,6 +8,7 @@ import DashBoard from "./components/DashBoard/DashBoardClass";
 import Register from "./components/Register/Register";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Page404 from "./components/Page404/Page404";
+import DashboardComp from "./components/DashBoard/DashBoard";
 
 const App=()=>{
   return (
@@ -16,7 +17,7 @@ const App=()=>{
         <Switch>
           <Route path="/" exact component={LogIn} />
           <Route path="/register" exact component={Register} />
-          <ProtectedRoute exact path="/dashboard" component={DashBoard} />
+          <ProtectedRoute exact path="/dashboard" component={DashboardComp} />
           <Route path="*" component={Page404} />
         </Switch>
       </Router>
