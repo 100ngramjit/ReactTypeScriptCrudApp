@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import SweetAlert from "react-bootstrap-sweetalert";
-import {get} from "lodash"
+import { get } from "lodash";
 
 class DashBoard extends React.Component {
   constructor(props) {
@@ -55,13 +55,13 @@ class DashBoard extends React.Component {
         <nav className="navbar navbar-expand-lg bg-info justify-content-between">
           <div className="container">
             <div className="p-2 bg-gradient-dark text-white">Dashboard</div>
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={this.onLogout}
-                  >
-                    LOGOUT
-                  </button>
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={this.onLogout}
+            >
+              LOGOUT
+            </button>
           </div>
         </nav>
 

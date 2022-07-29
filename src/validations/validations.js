@@ -15,6 +15,4 @@ const validatePassword = (value, field, passwordValue) => {
   }
 };
 
-export default validateName;
-
 export { validateName, validatePassword };

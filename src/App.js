@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import LogIn from "./components/Login/LogIn";
 // import DashBoard from "./components/DashBoard/DashBoardClass";
@@ -11,20 +11,18 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import Page404 from "./components/Page404/Page404";
 import DashboardComp from "./components/DashBoard/DashBoard";
 
-const App=()=>{
+const App = () => {
   return (
     <div>
-      <Router>
-        <Switch>
-          <Route path="/" exact component={LogIn} />
-          <Route path="/list" exact component={BlogList} />
-          <Route path="/register" exact component={Register} />
-          <ProtectedRoute exact path="/dashboard" component={DashboardComp} />
-          <Route path="*" component={Page404} />
-        </Switch>
-      </Router>
+      <Routes>
+        <Route path="/" element={<LogIn />} />
+        <Route path="/list" element={<BlogList />} />
+        <Route path="/register" element={<Register />} />
+        <Route exact path="/dashboard" element={<DashboardComp />} />
+        <Route path="*" element={<Page404 />} />
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
