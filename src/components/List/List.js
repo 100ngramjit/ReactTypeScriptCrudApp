@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 
 const List = () => {
   const baseURL = " https://testapi.io/api/Sangramjit/resource/new";
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState("");
-  const [editing, setEditing] = useState(null);
+  const [isEditing, setIsEditing] = useState(null);
   const [editingtext, setEditingtext] = useState("");
 
   const getData = () => {
@@ -29,6 +30,7 @@ const List = () => {
     });
     setTodo("");
     getData();
+    toast.success("Added successfully");
   };
 
   const deleteTodo = (id) => {
@@ -37,14 +39,28 @@ const List = () => {
     });
   };
 
+  const editTodo = (id) => {
+    [...todos].map((todo) => {
+      if (todo.id === id) {
+        axios.put(`${baseURL}/${id}`, {
+          title: editingtext,
+        });
+      }
+    });
+
+    setIsEditing(null);
+    setEditingtext("");
+    getData();
+  };
+
   return (
     <div className="todolist">
+      <Toaster />
       <h3>List</h3>
       <form
         className="todo-form"
         onSubmit={(e) => {
           handleSubmit(e);
-          getData();
         }}
       >
         <input
@@ -61,7 +77,7 @@ const List = () => {
       <div className="todos">
         {todos.map(({ title, id }) => (
           <div key={id} className="todo-list">
-            {editing === id ? (
+            {isEditing === id ? (
               <input
                 type="text"
                 onChange={(e) => setEditingtext(e.target.value)}
@@ -70,9 +86,37 @@ const List = () => {
             ) : (
               <div>{title}</div>
             )}
-            <button className="btn btn-danger" onClick={() => deleteTodo(id)}>
+            <button
+              className="m-2 p-10 btn btn-danger"
+              onClick={() => {
+                deleteTodo(id);
+                toast.error("Deleted Successfully ");
+              }}
+            >
               delete
             </button>
+            {isEditing === id ? (
+              <button
+                className="m-2 p-10 btn btn-secondary"
+                onClick={() => {
+                  editTodo(id);
+                  getData();
+                  toast.success("Edited Successfully");
+                }}
+              >
+                submit edits
+              </button>
+            ) : (
+              <button
+                className="m-2 p-10 btn btn-secondary"
+                onClick={() => {
+                  setIsEditing(id);
+                  getData();
+                }}
+              >
+                edit
+              </button>
+            )}
           </div>
         ))}
       </div>

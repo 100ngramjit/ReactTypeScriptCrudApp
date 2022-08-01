@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { get } from "lodash";
 import Header from "../Header.js/Header";
-import List from "../../List/List";
+import List from "../List/List";
 
 const DashboardComp = () => {
   return (
