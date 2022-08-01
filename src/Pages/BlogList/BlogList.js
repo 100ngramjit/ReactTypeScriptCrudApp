@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../Header.js/Header";
+import Header from "../../components/Header.js/Header";
 
 const BlogList = () => {
   return (
