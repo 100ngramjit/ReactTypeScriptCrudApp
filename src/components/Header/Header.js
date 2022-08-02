@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { get } from "lodash";
 

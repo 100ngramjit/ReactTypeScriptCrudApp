@@ -8,8 +8,8 @@ const validateName = (value, field) => {
 const validatePassword = (value, field, passwordValue) => {
   if (!value) {
     return "Required";
-  } else if (value.length > 6 || value.length < 6) {
-    return "6 characters only allowed";
+  } else if (value.length < 6) {
+    return "minimum 6 characters required";
   } else if (field === "cpassword" && value !== passwordValue) {
     return "Passwords do not match.";
   }

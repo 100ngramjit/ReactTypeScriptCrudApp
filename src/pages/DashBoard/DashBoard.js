@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import Header from "../../components/Header.js/Header";
-import List from "../../components/List/List";
+import Header from "components/Header/Header";
+import List from "components/List/List";
 
 const DashboardComp = () => {
   return (

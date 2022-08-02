@@ -39,7 +39,22 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": [
+            "src"
+          ],
+          "extensions": [
+            ".js",
+            ".jsx",
+            ".ts",
+            ".tsx"
+          ]
+        }
+      }
+    }
   },
   "browserslist": {
     "production": [

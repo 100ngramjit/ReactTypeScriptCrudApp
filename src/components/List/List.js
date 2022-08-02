@@ -76,7 +76,7 @@ const List = () => {
       </form>
       <div className="todos">
         {todos.map(({ title, id }) => (
-          <div key={id} className="todo-list">
+          <div key={id} className=".flex-column">
             {isEditing === id ? (
               <input
                 type="text"
@@ -84,7 +84,7 @@ const List = () => {
                 value={editingtext}
               />
             ) : (
-              <div>{title}</div>
+              <div className="mr-0">{title}</div>
             )}
             <button
               className="m-2 p-10 btn btn-danger"
@@ -97,7 +97,7 @@ const List = () => {
             </button>
             {isEditing === id ? (
               <button
-                className="m-2 p-10 btn btn-secondary"
+                className="m-2 p-10 btn btn-primary"
                 onClick={() => {
                   editTodo(id);
                   getData();

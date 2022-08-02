@@ -1,18 +1,15 @@
-import React from "react";
-import {
-  ToastsContainer,
-  ToastsStore,
-  ToastsContainerPosition,
-} from "react-toasts";
-import { Redirect, Link, Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
+import { Link, Navigate } from "react-router-dom";
 import base64 from "react-native-base64";
 import { Formik } from "formik";
-import { validateName, validatePassword } from "../../validations/validations";
+import { validateName, validatePassword } from "validations/validations";
 
 const LogIn = () => {
-  // const [submit,setSubmit]=useState(false);
+  const [submit, setSubmit] = useState(false);
   return (
     <div>
+      <Toaster />
       <Formik
         initialValues={{
           userName: "",
@@ -33,7 +30,7 @@ const LogIn = () => {
           actions.setSubmitting(false);
           let userObj = localStorage.getItem(values.userName);
           if (!userObj) {
-            ToastsStore.error("Invalid Username/Password.");
+            toast.error("Invalid Username/Password.");
           } else {
             userObj = JSON.parse(userObj);
             const localUname = (userObj && userObj.userName) || null;
@@ -46,9 +43,9 @@ const LogIn = () => {
             ) {
               userObj.isUserLoggedIn = true;
               localStorage.setItem(values.userName, JSON.stringify(userObj));
-              // setSubmit(true)
+              setSubmit(true);
             } else {
-              ToastsStore.error("Invalid Username/Password.");
+              toast.error("Invalid Username/Password.");
             }
           }
         }}
@@ -147,10 +144,6 @@ const LogIn = () => {
                 </div>
               </div>
             </div>
-            <ToastsContainer
-              store={ToastsStore}
-              position={ToastsContainerPosition.TOP_RIGHT}
-            />
           </div>
         )}
       </Formik>
