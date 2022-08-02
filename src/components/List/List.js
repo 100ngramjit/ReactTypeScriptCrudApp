@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import axios from "axios";
 
 const List = () => {
-  const baseURL = " https://testapi.io/api/Sangramjit/resource/new";
+  const baseURL = process.env.REACT_APP_URL;
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState("");
   const [isEditing, setIsEditing] = useState(null);
   const [editingtext, setEditingtext] = useState("");
 
-  const getData = () => {
-    axios.get(baseURL).then((resp) => setTodos(resp.data.data));
+  const getData = async () => {
+    await axios.get(baseURL).then((resp) => setTodos(resp.data.data));
     console.log("todo", todos);
   };
 
@@ -18,19 +18,17 @@ const List = () => {
     getData();
   }, []);
 
-  useEffect(() => {
-    const temp = JSON.stringify(todos);
-    localStorage.setItem("todos", temp);
-  }, [todos]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(baseURL, {
-      title: todo,
-    });
-    setTodo("");
-    getData();
-    toast.success("Added successfully");
+    axios
+      .post(baseURL, {
+        title: todo,
+      })
+      .then(() => {
+        setTodo("");
+        getData();
+        toast.success("Added successfully");
+      });
   };
 
   const deleteTodo = (id) => {
@@ -42,20 +40,21 @@ const List = () => {
   const editTodo = (id) => {
     [...todos].map((todo) => {
       if (todo.id === id) {
-        axios.put(`${baseURL}/${id}`, {
-          title: editingtext,
-        });
+        axios
+          .put(`${baseURL}/${id}`, {
+            title: editingtext,
+          })
+          .then(() => {
+            setIsEditing(null);
+            setEditingtext("");
+            getData();
+          });
       }
     });
-
-    setIsEditing(null);
-    setEditingtext("");
-    getData();
   };
 
   return (
     <div className="todolist">
-      <Toaster />
       <h3>List</h3>
       <form
         className="todo-form"

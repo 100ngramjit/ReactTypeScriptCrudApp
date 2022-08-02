@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { Link, Navigate } from "react-router-dom";
 import base64 from "react-native-base64";
 import { Formik } from "formik";
@@ -9,7 +9,6 @@ const LogIn = () => {
   const [submit, setSubmit] = useState(false);
   return (
     <div>
-      <Toaster />
       <Formik
         initialValues={{
           userName: "",
@@ -21,7 +20,7 @@ const LogIn = () => {
           errors.userName = validateName(values.userName, "Username") || null;
           errors.password = validatePassword(values.password) || null;
 
-          for (var key in errors) {
+          for (let key in errors) {
             if (errors[key] !== null) return errors;
           }
           return true;

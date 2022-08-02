@@ -33,7 +33,7 @@ const Register = () => {
             validatePassword(values.cpassword, "cpassword", values.password) ||
             null;
 
-          for (var key in errors) {
+          for (let key in errors) {
             if (errors[key] !== null) return errors;
           }
           return true;
