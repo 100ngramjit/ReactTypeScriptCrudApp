@@ -28,6 +28,7 @@ const LogIn = () => {
         onSubmit={(values, actions) => {
           actions.setSubmitting(false);
           let userObj = localStorage.getItem(values.userName);
+          console.log("sdcs", userObj);
           if (!userObj) {
             toast.error("Invalid Username/Password.");
           } else {

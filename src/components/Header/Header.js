@@ -12,13 +12,15 @@ const Header = ({ name, location }) => {
   const [logout, setLogout] = useState(false);
   const [loggedInUserObj, setLoggedInUserObj] = useState({});
 
-  const onLogoutYes = () => {
+  const onLogoutConfirmation = () => {
     setSubmit(false);
     setToggle(true);
+    console.log("iadqwdihbdqw");
 
     const userObj = JSON.parse(
       localStorage.getItem(get(loggedInUserObj, "userName", ""))
     );
+    console.log("first", userObj);
     userObj.isUserLoggedIn = false;
     localStorage.setItem(
       get(loggedInUserObj, "userName", ""),
@@ -60,10 +62,10 @@ const Header = ({ name, location }) => {
           confirmBtnText="Yes"
           confirmBtnBsStyle="success"
           title="Are you sure?"
-          onConfirm={onLogoutYes}
-          onCancel={onLogout}
+          onConfirm={onLogoutConfirmation}
+          // onCancel={onLogout}
           focusCancelBtn
-        ></SweetAlert>
+        />
       ) : (
         ""
       )}

@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const List = () => {
   const baseURL = process.env.REACT_APP_URL;
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState("");
   const [isEditing, setIsEditing] = useState(null);
-  const [editingtext, setEditingtext] = useState("");
+  const [titleText, setTitleText] = useState("");
+  const [detailsText, setDetailsText] = useState("");
 
   const getData = async () => {
     await axios.get(baseURL).then((resp) => setTodos(resp.data.data));
     console.log("todo", todos);
   };
 
+  const inputRef = useRef(null);
   useEffect(() => {
     getData();
+    inputRef.current.focus();
   }, []);
 
   const handleSubmit = (e) => {
@@ -42,11 +46,13 @@ const List = () => {
       if (todo.id === id) {
         axios
           .put(`${baseURL}/${id}`, {
-            title: editingtext,
+            title: titleText,
+            details: detailsText,
           })
           .then(() => {
             setIsEditing(null);
-            setEditingtext("");
+            setTitleText("");
+            setDetailsText("");
             getData();
           });
       }
@@ -68,20 +74,30 @@ const List = () => {
           type="text"
           onChange={(e) => setTodo(e.target.value)}
           value={todo}
+          ref={inputRef}
         />
         <button className="m-2 p-10 btn btn-primary" type="submit">
           Add
         </button>
       </form>
       <div className="todos">
-        {todos.map(({ title, id }) => (
+        {todos.map(({ title, details, id }) => (
           <div key={id} className=".flex-column">
             {isEditing === id ? (
-              <input
-                type="text"
-                onChange={(e) => setEditingtext(e.target.value)}
-                value={editingtext}
-              />
+              <div>
+                <input
+                  type="text"
+                  onChange={(e) => setTitleText(e.target.value)}
+                  placeholder="edit title"
+                  // value={title}
+                />
+                <input
+                  type="text"
+                  placeholder="edit details"
+                  onChange={(e) => setDetailsText(e.target.value)}
+                  // value={details}
+                />
+              </div>
             ) : (
               <div className="mr-0">{title}</div>
             )}
@@ -116,6 +132,10 @@ const List = () => {
                 edit
               </button>
             )}
+
+            <Link to={`/dashboard/${id}`}>
+              <button className="m-2 btn btn-info">view</button>
+            </Link>
           </div>
         ))}
       </div>
