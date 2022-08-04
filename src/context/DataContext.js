@@ -14,6 +14,12 @@ function DataProvider({ children }) {
     getData();
   }, []);
 
+  //   const localUname = `${get(
+  //     loggedInUserObj,
+  //     "firstName",
+  //     ""
+  //   )} ${get(loggedInUserObj, "lastName", "")}`;
+
   return <DataContext.Provider value={todos}>{children}</DataContext.Provider>;
 }
 

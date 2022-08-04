@@ -19,10 +19,10 @@ const BlogDetails = () => {
     console.log(blog);
   };
 
-  const editTodo = (param) => {
-    if (param) {
+  const editTodo = (item) => {
+    if (item) {
       axios
-        .put(`${baseURL}/${param.id}`, {
+        .put(`${baseURL}/${item.id}`, {
           title: titleText,
           details: detailsText,
         })
@@ -31,7 +31,7 @@ const BlogDetails = () => {
           setIsEditing(false);
           setTitleText("");
           setDetailsText("");
-          getBlog(param.id);
+          getBlog(item.id);
         })
         .catch((err) => console.log(err));
     }
@@ -52,13 +52,13 @@ const BlogDetails = () => {
               type="text"
               onChange={(e) => setTitleText(e.target.value)}
               placeholder="edit title"
-              // value={blog.title}
+              value={titleText}
             />
             <input
               type="text"
               placeholder="edit details"
               onChange={(e) => setDetailsText(e.target.value)}
-              // value={blog.details}
+              value={detailsText}
             />
           </div>
         ) : null}
@@ -86,7 +86,8 @@ const BlogDetails = () => {
             className="m-2 p-10 btn btn-secondary"
             onClick={() => {
               setIsEditing(true);
-              getBlog(blog.id);
+              setTitleText(blog.title);
+              setDetailsText(blog.details);
             }}
           >
             edit

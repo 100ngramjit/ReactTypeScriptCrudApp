@@ -47,7 +47,9 @@ const Header = ({ name, location }) => {
     <div>
       <nav className="navbar navbar-expand-lg bg-info justify-content-between">
         <div className="container">
-          <div className="p-2 bg-gradient-dark text-white">Dashboard</div>
+          <div className="p-2 bg-gradient-dark text-white">
+            {localUname} Dashboard
+          </div>
           <button type="button" className="btn btn-danger" onClick={onLogout}>
             LOGOUT
           </button>
