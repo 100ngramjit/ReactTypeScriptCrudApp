@@ -13,24 +13,20 @@ import Page404 from "pages/Page404/Page404";
 import DashboardComp from "pages/DashBoard/DashBoard";
 import { DataContext } from "context/DataContext";
 import BlogDetails from "pages/BlogDetails.js/BlogDetails";
+import List from "components/List/List";
 
 const App = () => {
   return (
     <div>
       <Routes>
         <Route path="/" element={<LogIn />} />
-        {/* <Route path="/dashboard/:id" element */}
-        <Route
-          path="/list"
-          element={
-            <Layout>
-              <BlogList />
-            </Layout>
-          }
-        />
+
         <Route path="/register" element={<Register />} />
-        <Route exact path="/dashboard/:id" element={<BlogDetails />} />
-        <Route exact path="/dashboard" element={<DashboardComp />} />
+        <Route path="/dashboard" element={<Layout />}>
+          <Route index element={<DashboardComp />} />
+          <Route path=":id" element={<BlogDetails />} />
+          <Route path="list" element={<List />} />
+        </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>
     </div>
