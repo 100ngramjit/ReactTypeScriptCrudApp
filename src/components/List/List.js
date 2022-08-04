@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
 const List = () => {
   const baseURL = process.env.REACT_APP_URL;
@@ -60,7 +61,7 @@ const List = () => {
   };
 
   return (
-    <div className="todolist">
+    <Container className="justify-contact-center">
       <h3>List</h3>
       <form
         className="todo-form"
@@ -139,7 +140,7 @@ const List = () => {
           </div>
         ))}
       </div>
-    </div>
+    </Container>
   );
 };
 

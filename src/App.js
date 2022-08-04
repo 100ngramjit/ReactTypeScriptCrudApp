@@ -3,7 +3,8 @@ import "bootstrap/dist/js/bootstrap.js";
 import React, { useContext } from "react";
 import { Routes, Route, useParams } from "react-router-dom";
 import "./App.css";
-import LogIn from "./pages/Login/LogIn";
+import LogIn from "pages/Login/LogIn";
+import Layout from "components/Layout/Layout";
 // import DashBoard from "./components/DashBoard/DashBoardClass";
 import Register from "pages/Register/Register";
 import BlogList from "pages/BlogList/BlogList";
@@ -19,7 +20,14 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LogIn />} />
         {/* <Route path="/dashboard/:id" element */}
-        <Route path="/list" element={<BlogList />} />
+        <Route
+          path="/list"
+          element={
+            <Layout>
+              <BlogList />
+            </Layout>
+          }
+        />
         <Route path="/register" element={<Register />} />
         <Route exact path="/dashboard/:id" element={<BlogDetails />} />
         <Route exact path="/dashboard" element={<DashboardComp />} />
