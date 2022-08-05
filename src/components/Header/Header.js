@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Redirect } from "react-router-dom";
 import { LoginContext } from "context/LoginState";
 
 const Header = () => {
@@ -17,7 +16,7 @@ const Header = () => {
           <nav className="navbar navbar-expand-lg bg-info justify-content-between">
             <div className="container">
               <div className="p-2 bg-gradient-dark text-white">
-                {localStorage.getItem("userlogined")} logged in
+                {a.displayName} logged in
               </div>
               <button onClick={afterLogout} className="btn btn-danger">
                 logout

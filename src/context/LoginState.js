@@ -7,6 +7,7 @@ const LoginState = ({ children }) => {
   let [loginScreen, setLoginScreen] = useState(true);
   let [signupScreen, setSignupScreen] = useState(false);
   let [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  let displayName = localStorage.getItem("userlogined");
   return (
     <LoginContext.Provider
       value={{
@@ -16,6 +17,7 @@ const LoginState = ({ children }) => {
         setSignupScreen,
         isUserLoggedIn,
         setIsUserLoggedIn,
+        displayName,
       }}
     >
       {children}

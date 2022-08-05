@@ -37,16 +37,18 @@ function MainScreen() {
     <>
       {a.loginScreen ? (
         <Container>
-          <Login afterLogin={afterSignup} />
-          <button
-            className="ml-20 p-10 btn btn-dark"
-            onClick={() => {
-              a.setSignupScreen(true);
-              a.setLoginScreen(false);
-            }}
-          >
-            register
-          </button>
+          <span>
+            <Login afterLogin={afterSignup} />
+            <button
+              className="ml-20 p-10 btn btn-dark"
+              onClick={() => {
+                a.setSignupScreen(true);
+                a.setLoginScreen(false);
+              }}
+            >
+              register
+            </button>
+          </span>
         </Container>
       ) : (
         ""

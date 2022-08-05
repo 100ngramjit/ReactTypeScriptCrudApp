@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 
 function Signup(props) {
@@ -35,55 +35,71 @@ function Signup(props) {
       toast.error("Passwords are not matching");
     }
   };
-
+  const validateForm = () => {
+    return username.length > 0 && password1.length > 0;
+  };
   return (
     <Container>
-      <h2>Hello,Please enter your credentials</h2>
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
-        className="m-2 p-10"
-      />
-
-      <input
-        type={passType1 ? "password" : "text"}
-        value={password1}
-        onChange={(e) => setPassword1(e.target.value)}
-        placeholder="set password"
-        className="m-2 p-10"
-      />
-
-      <button
-        className="m-2 p-10 btn btn-secondary"
-        onClick={() => {
-          setPassType1(!passType1);
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
         }}
       >
-        {passType1 ? "show" : "hide"}
-      </button>
+        <h2>Hello,Please enter your credentials</h2>
+        <Form.Group controlId="username">
+          <Form.Control
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+            className="m-2 p-10"
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="password1">
+          <Form.Control
+            type={passType1 ? "password" : "text"}
+            value={password1}
+            onChange={(e) => setPassword1(e.target.value)}
+            placeholder="set password"
+            className="m-2 p-10"
+            required
+          />
+        </Form.Group>
 
-      <input
-        type={passType2 ? "password" : "text"}
-        value={password2}
-        onChange={(e) => setPassword2(e.target.value)}
-        placeholder="confirm password"
-        className="m-2 p-10"
-      />
+        <button
+          className="m-2 p-10 btn btn-secondary"
+          onClick={() => {
+            setPassType1(!passType1);
+          }}
+        >
+          {passType1 ? "show" : "hide"}
+        </button>
 
-      <button
-        className="m-2 p-10 btn btn-secondary"
-        onClick={() => {
-          setPassType2(!passType2);
-        }}
-      >
-        {passType2 ? "show" : "hide"}
-      </button>
+        <Form.Group controlId="password2">
+          <Form.Control
+            type={passType2 ? "password" : "text"}
+            value={password2}
+            onChange={(e) => setPassword2(e.target.value)}
+            placeholder="Confirm password"
+            className="m-2 p-10"
+            required
+          />
+        </Form.Group>
 
-      <button className="m-2 p-10 btn btn-primary" onClick={handleSignup}>
-        signup
-      </button>
+        <button
+          className="m-2 p-10 btn btn-secondary"
+          onClick={() => {
+            setPassType2(!passType2);
+          }}
+        >
+          {passType2 ? "show" : "hide"}
+        </button>
+
+        <Button onClick={handleSignup} disabled={!validateForm()}>
+          signup
+        </Button>
+      </Form>
     </Container>
   );
 }
