@@ -13,23 +13,27 @@ import Page404 from "pages/Page404/Page404";
 import DashboardComp from "pages/DashBoard/DashBoard";
 import { DataContext } from "context/DataContext";
 import BlogDetails from "pages/BlogDetails.js/BlogDetails";
+import { LoginState } from "context/LoginState";
 import List from "components/List/List";
+import MainScreen from "components/MainScreen";
 
 const App = () => {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<LogIn />} />
+    <LoginState>
+      <div>
+        <Routes>
+          {/* <Route path="/" element={<LogIn />} /> */}
 
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Layout />}>
-          <Route index element={<DashboardComp />} />
-          <Route path=":id" element={<BlogDetails />} />
-          <Route path="list" element={<List />} />
-        </Route>
-        <Route path="*" element={<Page404 />} />
-      </Routes>
-    </div>
+          {/* <Route path="/register" element={<Register />} /> */}
+          <Route path="/" element={<Layout />}>
+            <Route index element={<MainScreen />} />
+            <Route path=":id" element={<BlogDetails />} />
+            <Route path="list" element={<List />} />
+          </Route>
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+      </div>
+    </LoginState>
   );
 };
 

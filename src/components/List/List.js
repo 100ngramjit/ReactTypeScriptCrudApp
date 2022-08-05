@@ -134,7 +134,7 @@ const List = () => {
               </button>
             )}
 
-            <Link to={`/dashboard/${id}`}>
+            <Link to={`/${id}`}>
               <button className="m-2 btn btn-info">view</button>
             </Link>
           </div>
