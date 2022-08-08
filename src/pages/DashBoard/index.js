@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import List from "components/List/List";
+import List from "components/List";
 
 const DashboardComp = () => {
   return (

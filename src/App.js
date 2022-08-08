@@ -3,20 +3,18 @@ import "bootstrap/dist/js/bootstrap.js";
 import React, { useContext } from "react";
 import { Routes, Route, useParams } from "react-router-dom";
 import "./App.css";
-import LogIn from "pages/Login/LogIn";
-import Login from "components/Login";
-import Layout from "components/Layout/Layout";
+import Login from "pages/Login";
+import Layout from "components/Layout";
 // import DashBoard from "./components/DashBoard/DashBoardClass";
-import Signup from "components/Signup";
-import BlogList from "pages/BlogList/BlogList";
+import Signup from "pages/Signup";
+import BlogList from "pages/BlogList";
 import { ProtectedRoute } from "ProtectedRoute";
-import Page404 from "pages/Page404/Page404";
-import DashboardComp from "pages/DashBoard/DashBoard";
+import Page404 from "pages/Page404";
+import DashboardComp from "pages/DashBoard";
 import { DataContext } from "context/DataContext";
-import BlogDetails from "pages/BlogDetails.js/BlogDetails";
+import BlogDetails from "pages/BlogDetails";
 import { LoginState } from "context/LoginState";
-import List from "components/List/List";
-import MainScreen from "components/MainScreen";
+import List from "components/List";
 
 const App = () => {
   return (

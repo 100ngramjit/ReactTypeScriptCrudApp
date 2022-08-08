@@ -78,7 +78,6 @@ function Login(props) {
         >
           {passType ? "show" : "hide"}
         </button>
-        {/* fix submit issue */}
         <button type="submit" className="m-2 p-10 btn btn-primary">
           login
         </button>
