@@ -4,7 +4,6 @@ import { Navigate } from "react-router-dom";
 
 const Header = () => {
   const a = useContext(LoginContext);
-  const auth = localStorage.getItem("userlogined");
   const [redirect, setRedirect] = useState(false);
   const afterLogout = () => {
     a.isUserLoggedIn = false;
@@ -13,19 +12,18 @@ const Header = () => {
   };
   return (
     <div>
-      <div>
-        <nav className="navbar navbar-expand-lg bg-info justify-content-between">
-          <div className="container">
-            <div className="p-2 bg-gradient-dark text-white">
-              {auth} logged in
-            </div>
-            <button onClick={afterLogout} className="btn btn-danger">
-              logout
-            </button>
-            {redirect ? <Navigate to="/" replace /> : ""}
+      <nav className="navbar navbar-expand-lg bg-info justify-content-between">
+        <div className="container">
+          <div className="p-2 bg-gradient-dark text-white">
+            {a.displayName} logged in
           </div>
-        </nav>
-      </div>
+          <button onClick={afterLogout} className="btn btn-danger">
+            logout
+          </button>
+          {/*Add bootstrap components*/}
+          {redirect ? <Navigate to="/" replace /> : ""}
+        </div>
+      </nav>
     </div>
   );
 };

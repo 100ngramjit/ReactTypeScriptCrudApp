@@ -10,7 +10,7 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const [passType, setPassType] = useState(true);
 
-  var auth = JSON.parse(localStorage.getItem("auth"));
+  const auth = JSON.parse(localStorage.getItem("auth"));
 
   const handleLogin = () => {
     if (auth === null) {
@@ -41,9 +41,11 @@ function Login(props) {
 
   return (
     <Container>
+      {a.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
       <Form
         onSubmit={(e) => {
           e.preventDefault();
+          handleLogin();
         }}
       >
         <h2>Hello,Please enter your credentials</h2>
@@ -69,17 +71,17 @@ function Login(props) {
         </Form.Group>
         <button
           className="m-2 p-10 btn btn-secondary"
+          type="button"
           onClick={() => {
             setPassType(!passType);
           }}
         >
           {passType ? "show" : "hide"}
         </button>
-
-        <button onClick={handleLogin} className="m-2 p-10 btn btn-primary">
+        {/* fix submit issue */}
+        <button type="submit" className="m-2 p-10 btn btn-primary">
           login
         </button>
-        {a.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
         <Link to="/register">
           <button className="m-2 p-10 btn btn-info">register</button>
         </Link>

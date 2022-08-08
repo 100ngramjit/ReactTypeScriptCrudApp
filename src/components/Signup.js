@@ -13,7 +13,7 @@ function Signup(props) {
   const [passType1, setPassType1] = useState(true);
   const [passType2, setPassType2] = useState(true);
 
-  var auth = JSON.parse(localStorage.getItem("auth"));
+  const auth = JSON.parse(localStorage.getItem("auth"));
 
   const handleSignup = () => {
     if (auth === null) {
