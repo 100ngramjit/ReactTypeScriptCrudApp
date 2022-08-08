@@ -1,33 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Navigate } from "react-router-dom";
 import { get } from "lodash";
+import { LoginContext } from "context/LoginState";
 
-function requireAuth(userNameKey) {
-  return JSON.parse(localStorage.getItem(userNameKey)).isUserLoggedIn;
-}
+export const ProtectedRoute = ({ children }) => {
+  const stateProvider = useContext(LoginContext);
 
-export const ProtectedRoute = ({ component: Component, ...rest }) => {
-  return (
-    <>
-      <Route
-        {...rest}
-        render={(props) => {
-          if (
-            get(props.location, "state.userName") &&
-            requireAuth(props.location.state.userName)
-          ) {
-            return <Component {...props} />;
-          } else {
-            return (
-              <Navigate
-                to={{
-                  pathname: "/",
-                }}
-              />
-            );
-          }
+  function requireAuth() {
+    return stateProvider.isUserLoggedIn;
+  }
+  if (requireAuth()) {
+    return children;
+  } else {
+    return (
+      <Navigate
+        to={{
+          pathname: "/",
         }}
       />
-    </>
-  );
+    );
+  }
 };
