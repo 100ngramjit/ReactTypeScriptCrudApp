@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
+import { LoginContext } from "context/LoginState";
 import { toast } from "react-hot-toast";
+import { Navigate, Link } from "react-router-dom";
 
 function Login(props) {
+  const a = useContext(LoginContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passType, setPassType] = useState(true);
@@ -21,7 +24,7 @@ function Login(props) {
         localStorage.setItem("userlogined", username);
         setUsername("");
         setPassword("");
-        props.afterLogin(username);
+        a.isUserLoggedIn = true;
       } else {
         toast.error("wrong password.");
       }
@@ -29,6 +32,12 @@ function Login(props) {
       toast.error(username + "user not exist!");
     }
   };
+  useEffect(() => {
+    let user = localStorage.getItem("userlogined");
+    if (user !== null || user !== "") {
+      a.setIsUserLoggedIn(false);
+    }
+  }, []);
 
   return (
     <Container>
@@ -70,6 +79,10 @@ function Login(props) {
         <button onClick={handleLogin} className="m-2 p-10 btn btn-primary">
           login
         </button>
+        {a.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
+        <Link to="/register">
+          <button className="m-2 p-10 btn btn-info">register</button>
+        </Link>
       </Form>
     </Container>
   );

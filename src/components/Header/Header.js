@@ -1,39 +1,31 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { LoginContext } from "context/LoginState";
+import { Navigate } from "react-router-dom";
 
 const Header = () => {
   const a = useContext(LoginContext);
+  const auth = localStorage.getItem("userlogined");
+  const [redirect, setRedirect] = useState(false);
   const afterLogout = () => {
+    a.isUserLoggedIn = false;
     localStorage.removeItem("userlogined");
-    a.setSignupScreen(false);
-    a.setLoginScreen(true);
-    a.setIsUserLoggedIn(false);
+    setRedirect(!redirect);
   };
   return (
     <div>
-      {a.isUserLoggedIn ? (
-        <div>
-          <nav className="navbar navbar-expand-lg bg-info justify-content-between">
-            <div className="container">
-              <div className="p-2 bg-gradient-dark text-white">
-                {a.displayName} logged in
-              </div>
-              <button onClick={afterLogout} className="btn btn-danger">
-                logout
-              </button>
+      <div>
+        <nav className="navbar navbar-expand-lg bg-info justify-content-between">
+          <div className="container">
+            <div className="p-2 bg-gradient-dark text-white">
+              {auth} logged in
             </div>
-          </nav>
-        </div>
-      ) : (
-        ""
-      )}
-      {/* {a.loginScreen ? (
-        <>
-          <Redirect to="/" replace />
-        </>
-      ) : (
-        ""
-      )} */}
+            <button onClick={afterLogout} className="btn btn-danger">
+              logout
+            </button>
+            {redirect ? <Navigate to="/" replace /> : ""}
+          </div>
+        </nav>
+      </div>
     </div>
   );
 };

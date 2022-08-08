@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { toast } from "react-hot-toast";
+import { LoginContext } from "context/LoginState";
+import { Navigate } from "react-router-dom";
 
 function Signup(props) {
+  const a = useContext(LoginContext);
   const [username, setUsername] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
@@ -27,7 +30,7 @@ function Signup(props) {
         setUsername("");
         setPassword1("");
         setPassword2("");
-        props.afterSignup(username);
+        a.isUserLoggedIn = true;
       } else {
         toast.error(username + " exist!");
       }
@@ -99,6 +102,7 @@ function Signup(props) {
         <Button onClick={handleSignup} disabled={!validateForm()}>
           signup
         </Button>
+        {a.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
       </Form>
     </Container>
   );

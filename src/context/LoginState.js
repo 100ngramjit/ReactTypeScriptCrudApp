@@ -4,17 +4,12 @@ import { createContext } from "react";
 const LoginContext = createContext();
 
 const LoginState = ({ children }) => {
-  let [loginScreen, setLoginScreen] = useState(true);
-  let [signupScreen, setSignupScreen] = useState(false);
   let [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  let displayName = localStorage.getItem("userlogined");
+  var auth = JSON.parse(localStorage.getItem("auth"));
+  let displayName = auth.username;
   return (
     <LoginContext.Provider
       value={{
-        loginScreen,
-        setLoginScreen,
-        signupScreen,
-        setSignupScreen,
         isUserLoggedIn,
         setIsUserLoggedIn,
         displayName,

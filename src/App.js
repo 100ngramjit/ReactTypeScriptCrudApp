@@ -4,9 +4,10 @@ import React, { useContext } from "react";
 import { Routes, Route, useParams } from "react-router-dom";
 import "./App.css";
 import LogIn from "pages/Login/LogIn";
+import Login from "components/Login";
 import Layout from "components/Layout/Layout";
 // import DashBoard from "./components/DashBoard/DashBoardClass";
-import Register from "pages/Register/Register";
+import Signup from "components/Signup";
 import BlogList from "pages/BlogList/BlogList";
 import { ProtectedRoute } from "ProtectedRoute";
 import Page404 from "pages/Page404/Page404";
@@ -25,8 +26,10 @@ const App = () => {
           {/* <Route path="/" element={<LogIn />} /> */}
 
           {/* <Route path="/register" element={<Register />} /> */}
-          <Route path="/" element={<Layout />}>
-            <Route index element={<MainScreen />} />
+          <Route path="/" element={<Login />} />
+          <Route path="register" element={<Signup />} />
+          <Route path="/dashboard" element={<Layout />}>
+            <Route index element={<List />} />
             <Route path=":id" element={<BlogDetails />} />
             <Route path="list" element={<List />} />
           </Route>
