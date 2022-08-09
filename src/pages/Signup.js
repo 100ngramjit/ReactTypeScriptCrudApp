@@ -5,15 +5,15 @@ import { LoginContext } from "context/LoginState";
 import { Navigate } from "react-router-dom";
 
 function Signup(props) {
-  const a = useContext(LoginContext);
+  const stateProvider = useContext(LoginContext);
   const [username, setUsername] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const [passType1, setPassType1] = useState(true);
-  const [passType2, setPassType2] = useState(true);
+  const [showHideToggle1, setShowHideToggle1] = useState(true);
+  const [showHideToggle2, setShowHideToggle2] = useState(true);
 
-  const auth = JSON.parse(localStorage.getItem("auth"));
+  let auth = JSON.parse(localStorage.getItem("auth"));
 
   const handleSignup = () => {
     if (auth === null) {
@@ -30,7 +30,7 @@ function Signup(props) {
         setUsername("");
         setPassword1("");
         setPassword2("");
-        a.isUserLoggedIn = true;
+        stateProvider.isUserLoggedIn = true;
       } else {
         toast.error(username + " exist!");
       }
@@ -43,9 +43,11 @@ function Signup(props) {
   };
   return (
     <Container>
+      {stateProvider.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
       <Form
         onSubmit={(e) => {
           e.preventDefault();
+          handleSignup();
         }}
       >
         <h2>Hello,Please enter your credentials</h2>
@@ -61,7 +63,7 @@ function Signup(props) {
         </Form.Group>
         <Form.Group controlId="password1">
           <Form.Control
-            type={passType1 ? "password" : "text"}
+            type={showHideToggle1 ? "password" : "text"}
             value={password1}
             onChange={(e) => setPassword1(e.target.value)}
             placeholder="set password"
@@ -69,19 +71,18 @@ function Signup(props) {
             required
           />
         </Form.Group>
-
-        <button
-          className="m-2 p-10 btn btn-secondary"
+        <Button
+          variant="secondary"
+          type="button"
           onClick={() => {
-            setPassType1(!passType1);
+            setShowHideToggle1(!showHideToggle1);
           }}
         >
-          {passType1 ? "show" : "hide"}
-        </button>
-
+          {showHideToggle1 ? "show" : "hide"}
+        </Button>
         <Form.Group controlId="password2">
           <Form.Control
-            type={passType2 ? "password" : "text"}
+            type={showHideToggle2 ? "password" : "text"}
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
             placeholder="Confirm password"
@@ -89,20 +90,18 @@ function Signup(props) {
             required
           />
         </Form.Group>
-
-        <button
-          className="m-2 p-10 btn btn-secondary"
+        <Button
+          variant="secondary"
+          type="button"
           onClick={() => {
-            setPassType2(!passType2);
+            setShowHideToggle2(!showHideToggle2);
           }}
         >
-          {passType2 ? "show" : "hide"}
-        </button>
-
-        <Button onClick={handleSignup} disabled={!validateForm()}>
+          {showHideToggle2 ? "show" : "hide"}
+        </Button>{" "}
+        <Button type="submit" disabled={!validateForm()}>
           signup
         </Button>
-        {a.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
       </Form>
     </Container>
   );

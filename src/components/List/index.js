@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 
 const List = () => {
   const baseURL = process.env.REACT_APP_URL;
@@ -14,7 +14,6 @@ const List = () => {
 
   const getData = async () => {
     await axios.get(baseURL).then((resp) => setTodos(resp.data.data));
-    console.log("todo", todos);
   };
 
   const inputRef = useRef(null);
@@ -76,10 +75,8 @@ const List = () => {
           onChange={(e) => setTodo(e.target.value)}
           value={todo}
           ref={inputRef}
-        />
-        <button className="m-2 p-10 btn btn-primary" type="submit">
-          Add
-        </button>
+        />{" "}
+        <Button type="submit">Add</Button>{" "}
       </form>
       <div className="todos">
         {todos.map(({ title, details, id }) => (
@@ -90,30 +87,29 @@ const List = () => {
                   type="text"
                   onChange={(e) => setTitleText(e.target.value)}
                   placeholder="edit title"
-                  // value={title}
+                  value={titleText}
                 />
                 <input
                   type="text"
                   placeholder="edit details"
                   onChange={(e) => setDetailsText(e.target.value)}
-                  // value={details}
+                  value={detailsText}
                 />
               </div>
             ) : (
               <div className="mr-0">{title}</div>
             )}
-            <button
-              className="m-2 p-10 btn btn-danger"
+            <Button
+              variant="danger"
               onClick={() => {
                 deleteTodo(id);
                 toast.error("Deleted Successfully ");
               }}
             >
               delete
-            </button>
+            </Button>{" "}
             {isEditing === id ? (
-              <button
-                className="m-2 p-10 btn btn-primary"
+              <Button
                 onClick={() => {
                   editTodo(id);
                   getData();
@@ -121,21 +117,21 @@ const List = () => {
                 }}
               >
                 submit edits
-              </button>
+              </Button>
             ) : (
-              <button
-                className="m-2 p-10 btn btn-secondary"
+              <Button
+                variant="secondary"
                 onClick={() => {
                   setIsEditing(id);
                   getData();
                 }}
               >
                 edit
-              </button>
+              </Button>
             )}
-
             <Link to={`/dashboard/${id}`}>
-              <button className="m-2 btn btn-info">view</button>
+              {" "}
+              <Button variant="info">view</Button>
             </Link>
           </div>
         ))}

@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { Navigate, Link } from "react-router-dom";
 
 function Login(props) {
-  const a = useContext(LoginContext);
+  const stateProvider = useContext(LoginContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passType, setPassType] = useState(true);
@@ -24,7 +24,7 @@ function Login(props) {
         localStorage.setItem("userlogined", username);
         setUsername("");
         setPassword("");
-        a.isUserLoggedIn = true;
+        stateProvider.isUserLoggedIn = true;
       } else {
         toast.error("wrong password.");
       }
@@ -35,13 +35,13 @@ function Login(props) {
   useEffect(() => {
     let user = localStorage.getItem("userlogined");
     if (user !== null || user !== "") {
-      a.setIsUserLoggedIn(false);
+      stateProvider.setIsUserLoggedIn(false);
     }
   }, []);
 
   return (
     <Container>
-      {a.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
+      {stateProvider.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
       <Form
         onSubmit={(e) => {
           e.preventDefault();
@@ -69,20 +69,20 @@ function Login(props) {
             required
           />
         </Form.Group>
-        <button
-          className="m-2 p-10 btn btn-secondary"
+        <Button
+          variant="secondary"
           type="button"
           onClick={() => {
             setPassType(!passType);
           }}
         >
           {passType ? "show" : "hide"}
-        </button>
-        <button type="submit" className="m-2 p-10 btn btn-primary">
-          login
-        </button>
+        </Button>
+        {"  "}
+        <Button type="submit">login</Button>
+        {"  "}
         <Link to="/register">
-          <button className="m-2 p-10 btn btn-info">register</button>
+          <Button variant="info">register</Button>
         </Link>
       </Form>
     </Container>

@@ -4,13 +4,11 @@ import List from "components/List";
 
 const DashboardComp = () => {
   return (
-    <div>
-      <Container>
-        <h1 className="mt-4">Hello</h1>
-        <p>Welcome to the dashboard</p>
-        <List />
-      </Container>
-    </div>
+    <Container>
+      <h1 className="mt-4">Hello</h1>
+      <p>Welcome to the dashboard</p>
+      <List />
+    </Container>
   );
 };
 

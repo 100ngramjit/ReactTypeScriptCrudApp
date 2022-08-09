@@ -11,7 +11,6 @@ import BlogList from "pages/BlogList";
 import { ProtectedRoute } from "ProtectedRoute";
 import Page404 from "pages/Page404";
 import DashboardComp from "pages/DashBoard";
-import { DataContext } from "context/DataContext";
 import BlogDetails from "pages/BlogDetails";
 import { LoginState } from "context/LoginState";
 import List from "components/List";
@@ -21,9 +20,6 @@ const App = () => {
     <LoginState>
       <div>
         <Routes>
-          {/* <Route path="/" element={<LogIn />} /> */}
-
-          {/* <Route path="/register" element={<Register />} /> */}
           <Route path="/" element={<Login />} />
           <Route path="register" element={<Signup />} />
           <Route

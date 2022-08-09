@@ -1,11 +1,7 @@
 import React from "react";
 
 const BlogList = () => {
-  return (
-    <div>
-      <div className="container mt-4"> BlogList</div>
-    </div>
-  );
+  return <div className="container mt-4"> BlogList</div>;
 };
 
 export default BlogList;
