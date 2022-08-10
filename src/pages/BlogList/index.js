@@ -27,9 +27,7 @@ const BlogList = () => {
     <div className="container mt-4">
       {blogs.data.data ? (
         blogs.data.data.map(({ details, id }) => (
-          <div key={id}>
-            <li>{details}</li>
-          </div>
+          <div key={id}>{details ? <li>{details}</li> : ""}</div>
         ))
       ) : (
         <Skeleton count={20} />

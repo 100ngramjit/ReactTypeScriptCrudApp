@@ -26,21 +26,28 @@ const List = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(baseURL, {
-        title: todo,
-      })
-      .then(() => {
-        setTodo("");
-        getData();
-        toast.success("Added successfully");
-      });
+    if (todo) {
+      axios
+        .post(baseURL, {
+          title: todo,
+        })
+        .then(() => {
+          setTodo("");
+          getData();
+          toast.success("Added successfully");
+        });
+      // .catch((err) => toast.error(err));
+    } else {
+      toast.error("Input field empty! please write something before adding");
+    }
   };
 
   const deleteTodo = (id) => {
     axios.delete(`${baseURL}/${id}`).then(() => {
       axios.get(baseURL).then((resp) => setTodos(resp.data.data));
+      toast.error("Deleted Successfully ");
     });
+    // .catch((err) => toast.error(err));
   };
 
   const editTodo = (id) => {
@@ -52,11 +59,13 @@ const List = () => {
             details: detailsText,
           })
           .then(() => {
+            toast.success("Edited Successfully");
             setIsEditing(null);
             setTitleText("");
             setDetailsText("");
             getData();
           });
+        // .catch((err) => toast.error(err));
       }
     });
   };
@@ -64,10 +73,10 @@ const List = () => {
   return (
     <Container>
       {todos.length ? (
-        <Container className="justify-contact-center">
+        <Container className="text-center">
           <h3>List</h3>
           <form
-            className="todo-form"
+            className="text-center"
             onSubmit={(e) => {
               handleSubmit(e);
             }}
@@ -80,7 +89,9 @@ const List = () => {
               value={todo}
               ref={inputRef}
             />{" "}
-            <Button type="submit">Add</Button>{" "}
+            <Button disabled={!todo} type="submit">
+              Add
+            </Button>{" "}
           </form>
           <div className="todos">
             {todos.map(({ title, details, id }) => (
@@ -101,13 +112,12 @@ const List = () => {
                     />
                   </div>
                 ) : (
-                  <div className="mr-0">{title}</div>
+                  <li>{title}</li>
                 )}
                 <Button
                   variant="danger"
                   onClick={() => {
                     deleteTodo(id);
-                    toast.error("Deleted Successfully ");
                   }}
                 >
                   Delete
@@ -117,8 +127,8 @@ const List = () => {
                     onClick={() => {
                       editTodo(id);
                       getData();
-                      toast.success("Edited Successfully");
                     }}
+                    disabled={!titleText}
                   >
                     submit edits
                   </Button>
