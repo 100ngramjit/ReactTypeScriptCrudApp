@@ -4,7 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Table } from "react-bootstrap";
 
 const List = () => {
   const baseURL = process.env.REACT_APP_URL;
@@ -35,19 +35,21 @@ const List = () => {
           setTodo("");
           getData();
           toast.success("Added successfully");
-        });
-      // .catch((err) => toast.error(err));
+        })
+        .catch((err) => toast.error(err));
     } else {
       toast.error("Input field empty! please write something before adding");
     }
   };
 
   const deleteTodo = (id) => {
-    axios.delete(`${baseURL}/${id}`).then(() => {
-      axios.get(baseURL).then((resp) => setTodos(resp.data.data));
-      toast.error("Deleted Successfully ");
-    });
-    // .catch((err) => toast.error(err));
+    axios
+      .delete(`${baseURL}/${id}`)
+      .then(() => {
+        axios.get(baseURL).then((resp) => setTodos(resp.data.data));
+        toast.error("Deleted Successfully ");
+      })
+      .catch((err) => toast.error(err));
   };
 
   const editTodo = (id) => {
@@ -61,20 +63,28 @@ const List = () => {
           .then(() => {
             toast.success("Edited Successfully");
             setIsEditing(null);
-            setTitleText("");
-            setDetailsText("");
+            // setTitleText("");
+            // setDetailsText("");
             getData();
-          });
-        // .catch((err) => toast.error(err));
+          })
+          .catch((err) => toast.error(err));
       }
     });
   };
+  const getFirstLine = (str) => {
+    const breakIndex = str.indexOf(".");
 
+    if (breakIndex === -1) {
+      return str;
+    }
+
+    return str.substr(0, breakIndex);
+  };
   return (
     <Container>
       {todos.length ? (
-        <Container className="text-center">
-          <h3>List</h3>
+        <>
+          <h3>Todo List</h3>
           <form
             className="text-center"
             onSubmit={(e) => {
@@ -82,8 +92,7 @@ const List = () => {
             }}
           >
             <input
-              className="input"
-              placeholder="Add a new task"
+              placeholder="Add a new title"
               type="text"
               onChange={(e) => setTodo(e.target.value)}
               value={todo}
@@ -93,64 +102,100 @@ const List = () => {
               Add
             </Button>{" "}
           </form>
-          <div className="todos">
-            {todos.map(({ title, details, id }) => (
-              <div key={id} className=".flex-column">
-                {isEditing === id ? (
-                  <div>
-                    <input
-                      type="text"
-                      onChange={(e) => setTitleText(e.target.value)}
-                      placeholder="edit title"
-                      value={titleText}
-                    />
-                    <input
-                      type="text"
-                      placeholder="edit details"
-                      onChange={(e) => setDetailsText(e.target.value)}
-                      value={detailsText}
-                    />
-                  </div>
-                ) : (
-                  <li>{title}</li>
-                )}
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    deleteTodo(id);
-                  }}
-                >
-                  Delete
-                </Button>{" "}
-                {isEditing === id ? (
-                  <Button
-                    onClick={() => {
-                      editTodo(id);
-                      getData();
-                    }}
-                    disabled={!titleText}
-                  >
-                    submit edits
-                  </Button>
-                ) : (
-                  <Button
-                    variant="secondary"
-                    onClick={() => {
-                      setIsEditing(id);
-                      getData();
-                    }}
-                  >
-                    Edit
-                  </Button>
-                )}
-                <Link to={`/dashboard/${id}`}>
-                  {" "}
-                  <Button variant="info">View</Button>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </Container>
+          <Table bordered hover responsive="lg" size="lg" variant="dark">
+            <thead>
+              <tr>
+                <th>Index</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th style={{ width: "250px" }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {todos.map(({ title, details, id }, index) => (
+                <tr key={id}>
+                  <td>{index + 1}</td>
+                  <td>
+                    {isEditing === id ? (
+                      <div>
+                        <textarea
+                          type="text"
+                          onChange={(e) => setTitleText(e.target.value)}
+                          placeholder="edit title"
+                          value={titleText}
+                        />
+                      </div>
+                    ) : (
+                      <div>{title}</div>
+                    )}
+                  </td>
+                  <td>
+                    {isEditing === id ? (
+                      <textarea
+                        type="text"
+                        placeholder="edit details"
+                        onChange={(e) => {
+                          setDetailsText(e.target.value);
+                        }}
+                        value={detailsText}
+                      />
+                    ) : (
+                      <>{getFirstLine(details) + "....."}</>
+                    )}
+                  </td>
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        deleteTodo(id);
+                      }}
+                    >
+                      Delete
+                    </Button>{" "}
+                    {isEditing === id ? (
+                      <div>
+                        <Button
+                          onClick={() => {
+                            editTodo(id);
+                            getData();
+                          }}
+                          disabled={!titleText}
+                        >
+                          Submit Edits
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            setIsEditing(null);
+                          }}
+                          variant="danger"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    ) : (
+                      <>
+                        <Button
+                          variant="secondary"
+                          onClick={() => {
+                            setIsEditing(id);
+                            setTitleText(title);
+                            setDetailsText(details);
+                            getData();
+                          }}
+                        >
+                          Edit
+                        </Button>{" "}
+                      </>
+                    )}
+                    <Link to={`/dashboard/${id}`}>
+                      <Button variant="info">View</Button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </>
       ) : (
         <Skeleton count={20} />
       )}

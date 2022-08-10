@@ -32,11 +32,9 @@ function Login(props) {
       toast.error(username + "user not exist!");
     }
   };
+
   useEffect(() => {
-    let user = localStorage.getItem("userlogined");
-    if (user !== null || user !== "") {
-      stateProvider.setIsUserLoggedIn(false);
-    }
+    stateProvider.setIsUserLoggedIn(false);
   }, []);
 
   return (
