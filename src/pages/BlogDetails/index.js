@@ -88,7 +88,7 @@ const BlogDetails = () => {
           )}
         </Container>
       ) : (
-        <Skeleton count={20} />
+        <Skeleton count={30} />
       )}
     </Container>
   );
