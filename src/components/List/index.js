@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
@@ -19,7 +21,7 @@ const List = () => {
   const inputRef = useRef(null);
   useEffect(() => {
     getData();
-    inputRef.current.focus();
+    // inputRef.current.focus();
   }, []);
 
   const handleSubmit = (e) => {
@@ -60,82 +62,88 @@ const List = () => {
   };
 
   return (
-    <Container className="justify-contact-center">
-      <h3>List</h3>
-      <form
-        className="todo-form"
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
-        <input
-          className="input"
-          placeholder="Add a new task"
-          type="text"
-          onChange={(e) => setTodo(e.target.value)}
-          value={todo}
-          ref={inputRef}
-        />{" "}
-        <Button type="submit">Add</Button>{" "}
-      </form>
-      <div className="todos">
-        {todos.map(({ title, details, id }) => (
-          <div key={id} className=".flex-column">
-            {isEditing === id ? (
-              <div>
-                <input
-                  type="text"
-                  onChange={(e) => setTitleText(e.target.value)}
-                  placeholder="edit title"
-                  value={titleText}
-                />
-                <input
-                  type="text"
-                  placeholder="edit details"
-                  onChange={(e) => setDetailsText(e.target.value)}
-                  value={detailsText}
-                />
+    <Container>
+      {todos.length ? (
+        <Container className="justify-contact-center">
+          <h3>List</h3>
+          <form
+            className="todo-form"
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+          >
+            <input
+              className="input"
+              placeholder="Add a new task"
+              type="text"
+              onChange={(e) => setTodo(e.target.value)}
+              value={todo}
+              ref={inputRef}
+            />{" "}
+            <Button type="submit">Add</Button>{" "}
+          </form>
+          <div className="todos">
+            {todos.map(({ title, details, id }) => (
+              <div key={id} className=".flex-column">
+                {isEditing === id ? (
+                  <div>
+                    <input
+                      type="text"
+                      onChange={(e) => setTitleText(e.target.value)}
+                      placeholder="edit title"
+                      value={titleText}
+                    />
+                    <input
+                      type="text"
+                      placeholder="edit details"
+                      onChange={(e) => setDetailsText(e.target.value)}
+                      value={detailsText}
+                    />
+                  </div>
+                ) : (
+                  <div className="mr-0">{title}</div>
+                )}
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    deleteTodo(id);
+                    toast.error("Deleted Successfully ");
+                  }}
+                >
+                  Delete
+                </Button>{" "}
+                {isEditing === id ? (
+                  <Button
+                    onClick={() => {
+                      editTodo(id);
+                      getData();
+                      toast.success("Edited Successfully");
+                    }}
+                  >
+                    submit edits
+                  </Button>
+                ) : (
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      setIsEditing(id);
+                      getData();
+                    }}
+                  >
+                    Edit
+                  </Button>
+                )}
+                <Link to={`/dashboard/${id}`}>
+                  {" "}
+                  <Button variant="info">View</Button>
+                </Link>
               </div>
-            ) : (
-              <div className="mr-0">{title}</div>
-            )}
-            <Button
-              variant="danger"
-              onClick={() => {
-                deleteTodo(id);
-                toast.error("Deleted Successfully ");
-              }}
-            >
-              delete
-            </Button>{" "}
-            {isEditing === id ? (
-              <Button
-                onClick={() => {
-                  editTodo(id);
-                  getData();
-                  toast.success("Edited Successfully");
-                }}
-              >
-                submit edits
-              </Button>
-            ) : (
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setIsEditing(id);
-                  getData();
-                }}
-              >
-                edit
-              </Button>
-            )}
-            <Link to={`/dashboard/${id}`}>
-              {" "}
-              <Button variant="info">view</Button>
-            </Link>
+            ))}
           </div>
-        ))}
-      </div>
+        </Container>
+      ) : (
+        <Skeleton count={20} />
+      )}
     </Container>
   );
 };

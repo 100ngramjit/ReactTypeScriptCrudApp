@@ -31,8 +31,8 @@ const App = () => {
             }
           >
             <Route index element={<List />} />
+            <Route path="list" element={<BlogList />} />
             <Route path=":id" element={<BlogDetails />} />
-            <Route path="list" element={<List />} />
           </Route>
           <Route path="*" element={<Page404 />} />
         </Routes>

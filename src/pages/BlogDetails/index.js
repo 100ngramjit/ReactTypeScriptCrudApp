@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { Container, Button } from "react-bootstrap";
+import Skeleton from "react-loading-skeleton";
 
 const BlogDetails = () => {
   const baseURL = process.env.REACT_APP_URL;
@@ -38,50 +39,56 @@ const BlogDetails = () => {
   }, []);
   return (
     <Container>
-      <h2>Title- {blog.title}</h2>
-      <p className="m-2">Details- {blog.details}</p>
-      {isEditing ? (
-        <div>
-          <input
-            type="text"
-            onChange={(e) => setTitleText(e.target.value)}
-            placeholder="edit title"
-            value={titleText}
-          />{" "}
-          <input
-            type="text"
-            placeholder="edit details"
-            onChange={(e) => setDetailsText(e.target.value)}
-            value={detailsText}
-          />
-        </div>
-      ) : null}
-      {isEditing ? (
-        <>
-          <Button
-            onClick={() => {
-              editTodo(blog);
-              getBlog(blog.id);
-              toast.success("Edited Successfully");
-            }}
-          >
-            submit edits
-          </Button>{" "}
-          <Button variant="danger" onClick={() => setIsEditing(false)}>
-            cancel
-          </Button>
-        </>
+      {Object.keys(blog).length ? (
+        <Container>
+          <h2>Title- {blog.title}</h2>
+          <p className="m-2">Details- {blog.details}</p>
+          {isEditing ? (
+            <div>
+              <input
+                type="text"
+                onChange={(e) => setTitleText(e.target.value)}
+                placeholder="edit title"
+                value={titleText}
+              />{" "}
+              <input
+                type="text"
+                placeholder="edit details"
+                onChange={(e) => setDetailsText(e.target.value)}
+                value={detailsText}
+              />
+            </div>
+          ) : null}
+          {isEditing ? (
+            <>
+              <Button
+                onClick={() => {
+                  editTodo(blog);
+                  getBlog(blog.id);
+                  toast.success("Edited Successfully");
+                }}
+              >
+                submit edits
+              </Button>{" "}
+              <Button variant="danger" onClick={() => setIsEditing(false)}>
+                cancel
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setIsEditing(true);
+                setTitleText(blog.title);
+                setDetailsText(blog.details);
+              }}
+            >
+              edit
+            </Button>
+          )}
+        </Container>
       ) : (
-        <Button
-          variant="secondary"
-          onClick={() => {
-            setIsEditing(true);
-            setTitleText(blog.title);
-            setDetailsText(blog.details);
-          }}
-        >
-          edit
-        </Button>
+        <Skeleton count={20} />
       )}
     </Container>
   );

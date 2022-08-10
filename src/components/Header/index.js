@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { LoginContext } from "context/LoginState";
-import { Navigate } from "react-router-dom";
+import { Button, Nav, Container } from "react-bootstrap";
+import { Navigate, Link } from "react-router-dom";
 
 const Header = () => {
   const stateProvider = useContext(LoginContext);
@@ -12,16 +13,23 @@ const Header = () => {
   };
   return (
     <nav className="navbar navbar-expand-lg bg-info justify-content-between">
-      <div className="container">
+      <Container>
         <div className="p-2 bg-gradient-dark text-white">
           {stateProvider.displayName} logged in
         </div>
-        <button onClick={afterLogout} className="btn btn-danger">
-          logout
-        </button>
-        {/*Add bootstrap components*/}
-        {redirect ? <Navigate to="/" replace /> : ""}
-      </div>
+      </Container>
+      <Container></Container>
+      <Link to="/dashboard">
+        <Button variant="info">home</Button>
+      </Link>
+      <Link to="/dashboard/list">
+        <Button variant="info">blogs</Button>
+      </Link>
+      <Button onClick={afterLogout} variant="danger">
+        logout
+      </Button>
+      {/*Add bootstrap components*/}
+      {redirect ? <Navigate to="/" replace /> : ""}
     </nav>
   );
 };
