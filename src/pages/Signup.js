@@ -1,8 +1,17 @@
 import React, { useState, useContext } from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Container,
+  InputGroup,
+  Row,
+  Col,
+  Card,
+} from "react-bootstrap";
 import { toast } from "react-hot-toast";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { LoginContext } from "context/LoginState";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 
 function Signup(props) {
   const stateProvider = useContext(LoginContext);
@@ -16,9 +25,9 @@ function Signup(props) {
   let auth = JSON.parse(localStorage.getItem("auth"));
 
   const handleSignup = () => {
-    if (auth === null) {
-      auth = [{ username: "aaa", password: "aaa" }];
-    }
+    // if (auth === null) {
+    //   auth = [{ username: "aaa", password: "aaa" }];
+    // }
 
     if (password1 === password2) {
       const same = auth.filter((d) => d.username === username);
@@ -44,65 +53,97 @@ function Signup(props) {
   return (
     <Container>
       {stateProvider.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSignup();
-        }}
-      >
-        <h2>Hello,Please enter your credentials</h2>
-        <Form.Group controlId="username">
-          <Form.Control
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            className="m-2 p-10"
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="password1">
-          <Form.Control
-            type={showHideToggle1 ? "password" : "text"}
-            value={password1}
-            onChange={(e) => setPassword1(e.target.value)}
-            placeholder="set password"
-            className="m-2 p-10"
-            required
-          />
-        </Form.Group>
-        <Button
-          variant="secondary"
-          type="button"
-          onClick={() => {
-            setShowHideToggle1(!showHideToggle1);
-          }}
-        >
-          {showHideToggle1 ? "show" : "hide"}
-        </Button>
-        <Form.Group controlId="password2">
-          <Form.Control
-            type={showHideToggle2 ? "password" : "text"}
-            value={password2}
-            onChange={(e) => setPassword2(e.target.value)}
-            placeholder="Confirm password"
-            className="m-2 p-10"
-            required
-          />
-        </Form.Group>
-        <Button
-          variant="secondary"
-          type="button"
-          onClick={() => {
-            setShowHideToggle2(!showHideToggle2);
-          }}
-        >
-          {showHideToggle2 ? "show" : "hide"}
-        </Button>{" "}
-        <Button type="submit" disabled={!validateForm()}>
-          signup
-        </Button>
-      </Form>
+      <Row>
+        <Col />
+        <Col>
+          <Card
+            style={{
+              margin: "1rem",
+              padding: "0.1rem",
+            }}
+            text="light"
+            bg="dark"
+          >
+            <Card.Body>
+              <Form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSignup();
+                }}
+              >
+                <h3>Signup</h3>
+                <hr />
+                <Form.Group controlId="username">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Username"
+                    className="m-2 p-10"
+                    required
+                  />
+                </Form.Group>
+                <Form.Group controlId="password1">
+                  <Form.Label>username</Form.Label>
+                  <InputGroup className="m-2">
+                    <Form.Control
+                      type={showHideToggle1 ? "password" : "text"}
+                      value={password1}
+                      onChange={(e) => setPassword1(e.target.value)}
+                      placeholder="Add password"
+                      required
+                    />
+                    <InputGroup.Text
+                      onClick={() => {
+                        setShowHideToggle1(!showHideToggle1);
+                      }}
+                    >
+                      {showHideToggle1 ? (
+                        <BsFillEyeFill />
+                      ) : (
+                        <BsFillEyeSlashFill />
+                      )}
+                    </InputGroup.Text>
+                  </InputGroup>
+                </Form.Group>
+                <Form.Group controlId="password2">
+                  <Form.Label>confirm username</Form.Label>
+                  <InputGroup className="m-2">
+                    <Form.Control
+                      type={showHideToggle2 ? "password" : "text"}
+                      value={password2}
+                      onChange={(e) => setPassword2(e.target.value)}
+                      placeholder="Confirm password"
+                      required
+                    />
+                    <InputGroup.Text
+                      onClick={() => {
+                        setShowHideToggle2(!showHideToggle2);
+                      }}
+                    >
+                      {showHideToggle2 ? (
+                        <BsFillEyeFill />
+                      ) : (
+                        <BsFillEyeSlashFill />
+                      )}
+                    </InputGroup.Text>
+                  </InputGroup>
+                </Form.Group>
+                <Button type="submit" disabled={!validateForm()}>
+                  signup
+                </Button>{" "}
+                <Link to="/">
+                  <Button type="button" variant="info">
+                    Login
+                  </Button>
+                </Link>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col />
+      </Row>
     </Container>
   );
 }

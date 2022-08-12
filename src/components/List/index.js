@@ -71,36 +71,30 @@ const List = () => {
       }
     });
   };
-  const getFirstLine = (str) => {
-    const breakIndex = str.indexOf(".");
 
-    if (breakIndex === -1) {
-      return str;
-    }
-
-    return str.substr(0, breakIndex);
-  };
   return (
     <Container>
+      {/* <h3>Todo List</h3> */}
       {todos.length ? (
         <>
-          <h3>Todo List</h3>
           <form
             className="text-center"
             onSubmit={(e) => {
               handleSubmit(e);
             }}
           >
-            <input
-              placeholder="Add a new title"
-              type="text"
-              onChange={(e) => setTodo(e.target.value)}
-              value={todo}
-              ref={inputRef}
-            />{" "}
-            <Button disabled={!todo} type="submit">
-              Add
-            </Button>{" "}
+            <Container>
+              <input
+                placeholder="Add a new title"
+                type="text"
+                onChange={(e) => setTodo(e.target.value)}
+                value={todo}
+                ref={inputRef}
+              />{" "}
+              <Button disabled={!todo} type="submit" className="m-2">
+                Add
+              </Button>{" "}
+            </Container>
           </form>
           <Table bordered hover responsive="lg" size="lg" variant="dark">
             <thead>
@@ -122,7 +116,7 @@ const List = () => {
                           type="text"
                           onChange={(e) => setTitleText(e.target.value)}
                           placeholder="edit title"
-                          value={titleText}
+                          value={titleText ? titleText : " "}
                         />
                       </div>
                     ) : (
@@ -137,10 +131,10 @@ const List = () => {
                         onChange={(e) => {
                           setDetailsText(e.target.value);
                         }}
-                        value={detailsText}
+                        value={detailsText ? detailsText : " "}
                       />
                     ) : (
-                      <>{getFirstLine(details) + "....."}</>
+                      <>{details && details.substr(0, 100) + "....."}</>
                     )}
                   </td>
                   <td>

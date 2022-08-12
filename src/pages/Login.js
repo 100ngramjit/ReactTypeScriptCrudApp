@@ -1,5 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  Card,
+  InputGroup,
+} from "react-bootstrap";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { LoginContext } from "context/LoginState";
 import { toast } from "react-hot-toast";
 import { Navigate, Link } from "react-router-dom";
@@ -33,56 +42,71 @@ function Login(props) {
     }
   };
 
-  useEffect(() => {
-    stateProvider.setIsUserLoggedIn(false);
-  }, []);
-
   return (
     <Container>
-      {stateProvider.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleLogin();
-        }}
-      >
-        <h2>Hello,Please enter your credentials</h2>
-        <Form.Group controlId="username">
-          <Form.Control
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            className="m-2 p-10"
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Control
-            type={passType ? "password" : "text"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="password"
-            className="m-2 p-10"
-            required
-          />
-        </Form.Group>
-        <Button
-          variant="secondary"
-          type="button"
-          onClick={() => {
-            setPassType(!passType);
-          }}
-        >
-          {passType ? "show" : "hide"}
-        </Button>
-        {"  "}
-        <Button type="submit">login</Button>
-        {"  "}
-        <Link to="/register">
-          <Button variant="info">register</Button>
-        </Link>
-      </Form>
+      {stateProvider.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}{" "}
+      <Row>
+        <Col />
+        <Col>
+          <Card
+            style={{
+              margin: "1rem",
+              padding: "0.1rem",
+            }}
+            text="light"
+            bg="dark"
+          >
+            <Card.Body>
+              <Form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleLogin();
+                }}
+              >
+                <h3>Login</h3>
+                <hr />
+                <Form.Group controlId="username">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Username"
+                    className="m-1"
+                    required
+                  />
+                </Form.Group>
+                <Form.Group controlId="password1">
+                  <Form.Label>Password</Form.Label>
+                  <InputGroup className="m-2">
+                    <Form.Control
+                      type={passType ? "password" : "text"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Add password"
+                      required
+                    />
+                    <InputGroup.Text
+                      onClick={() => {
+                        setPassType(!passType);
+                      }}
+                    >
+                      {passType ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
+                    </InputGroup.Text>
+                  </InputGroup>
+                </Form.Group>
+                {"  "}
+                <Button type="submit">login</Button>
+                {"  "}
+                <Link to="/register">
+                  <Button variant="info">register</Button>
+                </Link>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col />
+      </Row>
     </Container>
   );
 }

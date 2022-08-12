@@ -12,7 +12,7 @@ const Header = () => {
     setRedirect(!redirect);
   };
   return (
-    <nav className="navbar navbar-expand-lg bg-info justify-content-between">
+    <nav className="navbar navbar-expand-lg bg-dark justify-content-between">
       <Container>
         <div className="p-2 bg-gradient-dark text-white">
           {stateProvider.displayName} logged in
@@ -20,10 +20,10 @@ const Header = () => {
       </Container>
       <Container></Container>
       <Link to="/dashboard">
-        <Button variant="info">home</Button>
+        <Button variant="dark">home</Button>
       </Link>
       <Link to="/dashboard/list">
-        <Button variant="info">blogs</Button>
+        <Button variant="dark">blogs</Button>
       </Link>
       <Button onClick={afterLogout} variant="danger">
         logout

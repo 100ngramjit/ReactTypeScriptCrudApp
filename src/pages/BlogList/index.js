@@ -23,17 +23,16 @@ const BlogList = () => {
   useEffect(() => {
     dispatch(getData());
   }, []);
-  console.log(blogs.data.data);
   return (
     <Container>
+      <h3>Blogs</h3>
       <Row xs={1} md={2} lg={3} className="g-4">
         {blogs.data.data ? (
           blogs.data.data.map(({ title, details, id }) => (
-            <Col>
+            <Col key={id}>
               <Card
-                key={id}
                 style={{ width: "20rem", margin: "1rem" }}
-                bg="info"
+                bg="dark"
                 text="light"
               >
                 {details ? (
