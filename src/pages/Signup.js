@@ -12,13 +12,19 @@ import { toast } from "react-hot-toast";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { LoginContext } from "context/LoginState";
 import { Navigate, Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function Signup(props) {
   const stateProvider = useContext(LoginContext);
   const [username, setUsername] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm();
   const [showHideToggle1, setShowHideToggle1] = useState(true);
   const [showHideToggle2, setShowHideToggle2] = useState(true);
 
@@ -28,20 +34,23 @@ function Signup(props) {
     // if (auth === null) {
     //   auth = [{ username: "aaa", password: "aaa" }];
     // }
-
-    if (password1 === password2) {
-      const same = auth.filter((d) => d.username === username);
-
+    const values = getValues();
+    if (values.password1 === values.password2) {
+      const same = auth.filter((d) => d.username === values.email);
+      console.log(same);
       if (same.length === 0) {
-        auth = [...auth, { username: username, password: password1 }];
+        auth = [
+          ...auth,
+          { username: values.email, password: values.password1 },
+        ];
         localStorage.setItem("auth", JSON.stringify(auth));
-        localStorage.setItem("userlogined", username);
+        localStorage.setItem("userlogined", values.email);
         setUsername("");
         setPassword1("");
         setPassword2("");
         stateProvider.isUserLoggedIn = true;
       } else {
-        toast.error(username + " exist!");
+        toast.error(values.email + " exist!");
       }
     } else {
       toast.error("Passwords are not matching");
@@ -65,34 +74,37 @@ function Signup(props) {
             bg="dark"
           >
             <Card.Body>
-              <Form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSignup();
-                }}
-              >
+              <Form onSubmit={handleSubmit(handleSignup)}>
                 <h3>Signup</h3>
                 <hr />
                 <Form.Group controlId="username">
-                  <Form.Label>Username</Form.Label>
+                  <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="text"
-                    value={username}
+                    // value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Username"
                     className="m-2 p-10"
-                    required
+                    {...register("email", {
+                      required: true,
+                      pattern:
+                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    })}
                   />
                 </Form.Group>
+                {errors.email && <p>Please check the Email</p>}
                 <Form.Group controlId="password1">
-                  <Form.Label>username</Form.Label>
+                  <Form.Label>set password</Form.Label>
                   <InputGroup className="m-2">
                     <Form.Control
                       type={showHideToggle1 ? "password" : "text"}
-                      value={password1}
+                      // value={password1}
                       onChange={(e) => setPassword1(e.target.value)}
                       placeholder="Add password"
-                      required
+                      {...register("password1", {
+                        required: true,
+                        maxLength: 10,
+                      })}
                     />
                     <InputGroup.Text
                       onClick={() => {
@@ -107,15 +119,19 @@ function Signup(props) {
                     </InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
+                {errors.password1 && <p>Please check the Password</p>}
                 <Form.Group controlId="password2">
-                  <Form.Label>confirm username</Form.Label>
+                  <Form.Label>confirm password</Form.Label>
                   <InputGroup className="m-2">
                     <Form.Control
                       type={showHideToggle2 ? "password" : "text"}
-                      value={password2}
+                      // value={password2}
                       onChange={(e) => setPassword2(e.target.value)}
                       placeholder="Confirm password"
-                      required
+                      {...register("password2", {
+                        required: true,
+                        maxLength: 10,
+                      })}
                     />
                     <InputGroup.Text
                       onClick={() => {
@@ -130,9 +146,8 @@ function Signup(props) {
                     </InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
-                <Button type="submit" disabled={!validateForm()}>
-                  signup
-                </Button>{" "}
+                {errors.password1 && <p>Please check the Password</p>}
+                <Button type="submit">Signup</Button>{" "}
                 <Link to="/">
                   <Button type="button" variant="info">
                     Login
