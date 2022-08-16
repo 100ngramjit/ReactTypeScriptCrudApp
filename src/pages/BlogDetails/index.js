@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
 const BlogDetails = () => {
@@ -40,53 +40,55 @@ const BlogDetails = () => {
   return (
     <Container>
       {Object.keys(blog).length ? (
-        <Container>
-          <h2>Title- {blog.title}</h2>
-          <p className="m-2">Details- {blog.details}</p>
-          {isEditing ? (
-            <div>
-              <input
-                type="text"
-                onChange={(e) => setTitleText(e.target.value)}
-                placeholder="edit title"
-                value={titleText}
-              />{" "}
-              <input
-                type="text"
-                placeholder="edit details"
-                onChange={(e) => setDetailsText(e.target.value)}
-                value={detailsText}
-              />
-            </div>
-          ) : null}
-          {isEditing ? (
-            <>
+        <Card style={{ width: "20rem", margin: "1rem" }} bg="dark" text="light">
+          <Card.Body>
+            <Card.Title>{blog.title}</Card.Title>{" "}
+            {blog.details.substr(0, 250) + "....."}
+            {isEditing ? (
+              <div>
+                <input
+                  type="text"
+                  onChange={(e) => setTitleText(e.target.value)}
+                  placeholder="edit title"
+                  value={titleText}
+                />{" "}
+                <input
+                  type="text"
+                  placeholder="edit details"
+                  onChange={(e) => setDetailsText(e.target.value)}
+                  value={detailsText}
+                />
+              </div>
+            ) : null}
+            {isEditing ? (
+              <>
+                <Button
+                  onClick={() => {
+                    editTodo(blog);
+                    getBlog(blog.id);
+                    toast.success("Edited Successfully");
+                  }}
+                >
+                  submit edits
+                </Button>{" "}
+                <Button variant="danger" onClick={() => setIsEditing(false)}>
+                  cancel
+                </Button>
+              </>
+            ) : (
               <Button
+                variant="secondary"
                 onClick={() => {
-                  editTodo(blog);
-                  getBlog(blog.id);
-                  toast.success("Edited Successfully");
+                  setIsEditing(true);
+                  setTitleText(blog.title);
+                  setDetailsText(blog.details);
                 }}
               >
-                submit edits
-              </Button>{" "}
-              <Button variant="danger" onClick={() => setIsEditing(false)}>
-                cancel
+                edit
               </Button>
-            </>
-          ) : (
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setIsEditing(true);
-                setTitleText(blog.title);
-                setDetailsText(blog.details);
-              }}
-            >
-              edit
-            </Button>
-          )}
-        </Container>
+            )}
+          </Card.Body>
+        </Card>
       ) : (
         <Skeleton count={30} />
       )}

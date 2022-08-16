@@ -108,9 +108,13 @@ function Login(props) {
                     </InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
-                {errors.password && <p>Please check the Password</p>}
+                {errors.password && (
+                  <p className="text-danger">Please check the Password</p>
+                )}
                 {"  "}
-                <Button type="submit">login</Button>
+                <Button type="submit" disabled={username}>
+                  login
+                </Button>
                 {"  "}
                 <Link to="/register">
                   <Button variant="info">register</Button>

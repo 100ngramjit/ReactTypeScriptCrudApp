@@ -92,7 +92,9 @@ function Signup(props) {
                     })}
                   />
                 </Form.Group>
-                {errors.email && <p>Please check the Email</p>}
+                {errors.email && (
+                  <p className="text-danger">Please check the Email</p>
+                )}
                 <Form.Group controlId="password1">
                   <Form.Label>set password</Form.Label>
                   <InputGroup className="m-2">
@@ -119,7 +121,9 @@ function Signup(props) {
                     </InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
-                {errors.password1 && <p>Please check the Password</p>}
+                {errors.password1 && (
+                  <p className="text-danger">Please check the Password</p>
+                )}
                 <Form.Group controlId="password2">
                   <Form.Label>confirm password</Form.Label>
                   <InputGroup className="m-2">
@@ -146,7 +150,9 @@ function Signup(props) {
                     </InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
-                {errors.password1 && <p>Please check the Password</p>}
+                {errors.password1 && (
+                  <p className="text-danger">Please check the Password</p>
+                )}
                 <Button type="submit">Signup</Button>{" "}
                 <Link to="/">
                   <Button type="button" variant="info">
