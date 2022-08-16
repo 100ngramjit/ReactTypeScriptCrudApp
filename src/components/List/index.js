@@ -3,6 +3,18 @@ import { toast } from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
+import {
+  Add,
+  Edit,
+  View,
+  Index,
+  Description,
+  Actions,
+  Title,
+  Delete,
+  Cancel,
+  SubmitEdits,
+} from "components/Constants";
 import { Link } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 
@@ -92,17 +104,17 @@ const List = () => {
                 ref={inputRef}
               />{" "}
               <Button disabled={!todo} type="submit" className="m-2">
-                Add
+                {Add}
               </Button>{" "}
             </Container>
           </form>
           <Table bordered hover responsive="lg" size="lg" variant="dark">
             <thead>
               <tr>
-                <th>Index</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th style={{ width: "250px" }}>Actions</th>
+                <th>{Index}</th>
+                <th>{Title}</th>
+                <th>{Description}</th>
+                <th style={{ width: "250px" }}>{Actions}</th>
               </tr>
             </thead>
             <tbody>
@@ -144,7 +156,7 @@ const List = () => {
                         deleteTodo(id);
                       }}
                     >
-                      Delete
+                      {Delete}
                     </Button>{" "}
                     {isEditing === id ? (
                       <div>
@@ -155,7 +167,7 @@ const List = () => {
                           }}
                           disabled={!titleText}
                         >
-                          Submit Edits
+                          {SubmitEdits}
                         </Button>
                         <Button
                           onClick={() => {
@@ -163,7 +175,7 @@ const List = () => {
                           }}
                           variant="danger"
                         >
-                          Cancel
+                          {Cancel}
                         </Button>
                       </div>
                     ) : (
@@ -177,12 +189,12 @@ const List = () => {
                             getData();
                           }}
                         >
-                          Edit
+                          {Edit}
                         </Button>{" "}
                       </>
                     )}
                     <Link to={`/dashboard/${id}`}>
-                      <Button variant="info">View</Button>
+                      <Button variant="info">{View}</Button>
                     </Link>
                   </td>
                 </tr>

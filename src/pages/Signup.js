@@ -10,6 +10,13 @@ import {
 } from "react-bootstrap";
 import { toast } from "react-hot-toast";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
+import {
+  Register,
+  LogIn,
+  Email,
+  Password,
+  ConfirmPassword,
+} from "components/Constants";
 import { LoginContext } from "context/LoginState";
 import { Navigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -75,10 +82,10 @@ function Signup(props) {
           >
             <Card.Body>
               <Form onSubmit={handleSubmit(handleSignup)}>
-                <h3>Signup</h3>
+                <h3>{Register}</h3>
                 <hr />
                 <Form.Group controlId="username">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>{Email}</Form.Label>
                   <Form.Control
                     type="text"
                     // value={username}
@@ -96,7 +103,7 @@ function Signup(props) {
                   <p className="text-danger">Please check the Email</p>
                 )}
                 <Form.Group controlId="password1">
-                  <Form.Label>set password</Form.Label>
+                  <Form.Label>{Password}</Form.Label>
                   <InputGroup className="m-2">
                     <Form.Control
                       type={showHideToggle1 ? "password" : "text"}
@@ -125,7 +132,7 @@ function Signup(props) {
                   <p className="text-danger">Please check the Password</p>
                 )}
                 <Form.Group controlId="password2">
-                  <Form.Label>confirm password</Form.Label>
+                  <Form.Label>{ConfirmPassword}</Form.Label>
                   <InputGroup className="m-2">
                     <Form.Control
                       type={showHideToggle2 ? "password" : "text"}
@@ -153,10 +160,10 @@ function Signup(props) {
                 {errors.password1 && (
                   <p className="text-danger">Please check the Password</p>
                 )}
-                <Button type="submit">Signup</Button>{" "}
+                <Button type="submit">{Register}</Button>{" "}
                 <Link to="/">
                   <Button type="button" variant="info">
-                    Login
+                    {LogIn}
                   </Button>
                 </Link>
               </Form>

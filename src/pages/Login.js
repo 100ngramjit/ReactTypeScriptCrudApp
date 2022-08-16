@@ -8,6 +8,7 @@ import {
   Card,
   InputGroup,
 } from "react-bootstrap";
+import { Register, LogIn, Email, Password } from "components/Constants";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { LoginContext } from "context/LoginState";
 import { toast } from "react-hot-toast";
@@ -49,6 +50,9 @@ function Login(props) {
       toast.error(values.email + "user not exist!");
     }
   };
+  useEffect(() => {
+    stateProvider.isUserLoggedIn = false;
+  }, []);
 
   return (
     <Container>
@@ -66,10 +70,10 @@ function Login(props) {
           >
             <Card.Body>
               <Form onSubmit={handleSubmit(handleLogin)}>
-                <h3>Login</h3>
+                <h3>{LogIn}</h3>
                 <hr />
                 <Form.Group controlId="username">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>{Email}</Form.Label>
                   <Form.Control
                     type="text"
                     // value={username}
@@ -87,7 +91,7 @@ function Login(props) {
                   <p className="text-danger">Please check the Email</p>
                 )}
                 <Form.Group controlId="password1">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>{Password}</Form.Label>
                   <InputGroup className="m-2">
                     <Form.Control
                       type={passType ? "password" : "text"}
@@ -113,11 +117,11 @@ function Login(props) {
                 )}
                 {"  "}
                 <Button type="submit" disabled={username}>
-                  login
+                  {LogIn}
                 </Button>
                 {"  "}
                 <Link to="/register">
-                  <Button variant="info">register</Button>
+                  <Button variant="info">{Register}</Button>
                 </Link>
               </Form>
             </Card.Body>
