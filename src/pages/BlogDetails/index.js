@@ -30,6 +30,7 @@ const BlogDetails = () => {
           setTitleText("");
           setDetailsText("");
           getBlog(item.id);
+          toast.success("Edited Successfully");
         })
         .catch((err) => console.log(err));
     }
@@ -67,7 +68,6 @@ const BlogDetails = () => {
                   onClick={() => {
                     editTodo(blog);
                     getBlog(blog.id);
-                    toast.success("Edited Successfully");
                   }}
                 >
                   {SubmitEdits}

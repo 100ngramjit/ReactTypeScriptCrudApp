@@ -100,7 +100,6 @@ function Login(props) {
                       placeholder="Add password"
                       {...register("password", {
                         required: true,
-                        maxLength: 10,
                       })}
                     />
                     <InputGroup.Text

@@ -38,9 +38,9 @@ function Signup(props) {
   let auth = JSON.parse(localStorage.getItem("auth"));
 
   const handleSignup = () => {
-    // if (auth === null) {
-    //   auth = [{ username: "aaa", password: "aaa" }];
-    // }
+    if (auth === null) {
+      auth = [{ username: "aaa", password: "aaa" }];
+    }
     const values = getValues();
     if (values.password1 === values.password2) {
       const same = auth.filter((d) => d.username === values.email);

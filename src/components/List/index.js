@@ -15,6 +15,7 @@ import {
   Cancel,
   SubmitEdits,
 } from "components/Constants";
+import { getBlogs } from "services/apiService";
 import { Link } from "react-router-dom";
 import { Container, Button, Table } from "react-bootstrap";
 
@@ -65,23 +66,19 @@ const List = () => {
   };
 
   const editTodo = (id) => {
-    [...todos].map((todo) => {
-      if (todo.id === id) {
-        axios
-          .put(`${baseURL}/${id}`, {
-            title: titleText,
-            details: detailsText,
-          })
-          .then(() => {
-            toast.success("Edited Successfully");
-            setIsEditing(null);
-            // setTitleText("");
-            // setDetailsText("");
-            getData();
-          })
-          .catch((err) => toast.error(err));
-      }
-    });
+    axios
+      .put(`${baseURL}/${id}`, {
+        title: titleText,
+        details: detailsText,
+      })
+      .then(() => {
+        toast.success("Edited Successfully");
+        setIsEditing(null);
+        // setTitleText("");
+        // setDetailsText("");
+        getData();
+      })
+      .catch((err) => toast.error(err));
   };
 
   return (
