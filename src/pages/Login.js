@@ -50,9 +50,9 @@ function Login(props) {
       toast.error(values.email + "user not exist!");
     }
   };
-  useEffect(() => {
-    stateProvider.setIsUserLoggedIn(false);
-  }, []);
+  // useEffect(() => {
+  //   stateProvider.setIsUserLoggedIn(false);
+  // }, []);
 
   return (
     <Container>

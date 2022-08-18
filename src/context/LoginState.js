@@ -4,8 +4,8 @@ import { createContext } from "react";
 const LoginContext = createContext();
 
 const LoginState = ({ children }) => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   const displayName = localStorage.getItem("userlogined");
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(displayName);
   return (
     <LoginContext.Provider
       value={{
