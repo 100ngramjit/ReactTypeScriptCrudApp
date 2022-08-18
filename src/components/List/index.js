@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
+import { SweetAlert } from "react-bootstrap-sweetalert";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import {
@@ -26,6 +27,7 @@ const List = () => {
   const [isEditing, setIsEditing] = useState(null);
   const [titleText, setTitleText] = useState("");
   const [detailsText, setDetailsText] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const getData = async () => {
     await axios.get(baseURL).then((resp) => setTodos(resp.data.data));
@@ -155,6 +157,25 @@ const List = () => {
                     >
                       {Delete}
                     </Button>{" "}
+                    {/* {confirmDelete ? (
+                      <SweetAlert
+                        warning
+                        showCancel
+                        confirmBtnText="Yes, delete it!"
+                        confirmBtnBsStyle="danger"
+                        title="Are you sure?"
+                        onConfirm={() => {
+                          deleteTodo(id);
+                        }}
+                        onCancel={()=>{
+                          setConfirmDelete(false)
+                        }}
+                      >
+                        You will not be able to recover this imaginary file!
+                      </SweetAlert>
+                    ) : (
+                      " "
+                    )} */}
                     {isEditing === id ? (
                       <div>
                         <Button

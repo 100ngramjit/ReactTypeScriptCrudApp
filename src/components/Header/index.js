@@ -6,11 +6,9 @@ import { Navigate, Link } from "react-router-dom";
 
 const Header = () => {
   const stateProvider = useContext(LoginContext);
-  const [redirect, setRedirect] = useState(false);
   const afterLogout = () => {
-    stateProvider.isUserLoggedIn = false;
+    stateProvider.setIsUserLoggedIn(false);
     localStorage.removeItem("userlogined");
-    setRedirect(!redirect);
   };
   return (
     <nav className="navbar navbar-expand-lg bg-dark justify-content-between">
@@ -30,7 +28,7 @@ const Header = () => {
         {Logout}
       </Button>
       {/*Add bootstrap components*/}
-      {redirect ? <Navigate to="/" replace /> : ""}
+      {!stateProvider.isUserLoggedIn ? <Navigate to="/" replace /> : ""}
     </nav>
   );
 };

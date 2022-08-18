@@ -42,7 +42,7 @@ function Login(props) {
         localStorage.setItem("userlogined", values.email);
         setUsername("");
         setPassword("");
-        stateProvider.isUserLoggedIn = true;
+        stateProvider.setIsUserLoggedIn(true);
       } else {
         toast.error("wrong password.");
       }
@@ -51,7 +51,7 @@ function Login(props) {
     }
   };
   useEffect(() => {
-    stateProvider.isUserLoggedIn = false;
+    stateProvider.setIsUserLoggedIn(false);
   }, []);
 
   return (

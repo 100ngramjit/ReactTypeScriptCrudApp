@@ -39,7 +39,7 @@ function Signup(props) {
 
   const handleSignup = () => {
     if (auth === null) {
-      auth = [{ username: "aaa", password: "aaa" }];
+      auth = [{ username: "", password: "" }];
     }
     const values = getValues();
     if (values.password1 === values.password2) {
@@ -55,7 +55,7 @@ function Signup(props) {
         setUsername("");
         setPassword1("");
         setPassword2("");
-        stateProvider.isUserLoggedIn = true;
+        stateProvider.setIsUserLoggedIn(true);
       } else {
         toast.error(values.email + " exist!");
       }
