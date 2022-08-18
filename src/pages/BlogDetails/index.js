@@ -61,32 +61,34 @@ const BlogDetails = () => {
                 />
               </div>
             ) : null}
-            {isEditing ? (
-              <>
+            <p>
+              {isEditing ? (
+                <>
+                  <Button
+                    onClick={() => {
+                      editTodo(blog);
+                      getBlog(blog.id);
+                    }}
+                  >
+                    {SubmitEdits}
+                  </Button>{" "}
+                  <Button variant="danger" onClick={() => setIsEditing(false)}>
+                    {Cancel}
+                  </Button>
+                </>
+              ) : (
                 <Button
+                  variant="secondary"
                   onClick={() => {
-                    editTodo(blog);
-                    getBlog(blog.id);
+                    setIsEditing(true);
+                    setTitleText(blog.title);
+                    setDetailsText(blog.details);
                   }}
                 >
-                  {SubmitEdits}
-                </Button>{" "}
-                <Button variant="danger" onClick={() => setIsEditing(false)}>
-                  {Cancel}
+                  {Edit}
                 </Button>
-              </>
-            ) : (
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setIsEditing(true);
-                  setTitleText(blog.title);
-                  setDetailsText(blog.details);
-                }}
-              >
-                {Edit}
-              </Button>
-            )}
+              )}
+            </p>
           </Card.Body>
         </Card>
       ) : (

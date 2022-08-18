@@ -18,7 +18,7 @@ import {
 } from "components/Constants";
 import { getBlogs } from "services/apiService";
 import { Link } from "react-router-dom";
-import { Container, Button, Table } from "react-bootstrap";
+import { Container, Button, Table, Form, InputGroup } from "react-bootstrap";
 
 const List = () => {
   const baseURL = process.env.REACT_APP_URL;
@@ -27,7 +27,7 @@ const List = () => {
   const [isEditing, setIsEditing] = useState(null);
   const [titleText, setTitleText] = useState("");
   const [detailsText, setDetailsText] = useState("");
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
   const getData = () => {
     getBlogs(baseURL).then((resp) => setTodos(resp.data.data));
@@ -35,9 +35,8 @@ const List = () => {
 
   const inputRef = useRef(null);
   useEffect(() => {
-    getData();
-
     // inputRef.current.focus();
+    getData();
   }, []);
 
   const handleSubmit = (e) => {
@@ -86,25 +85,27 @@ const List = () => {
     <Container>
       {todos.length ? (
         <>
-          <form
+          <Form
             className="text-center"
             onSubmit={(e) => {
               handleSubmit(e);
             }}
           >
-            <Container>
-              <input
-                placeholder="Add a new title"
-                type="text"
-                onChange={(e) => setTodo(e.target.value)}
-                value={todo}
-                ref={inputRef}
-              />{" "}
-              <Button disabled={!todo} type="submit" className="m-2">
-                {Add}
-              </Button>{" "}
-            </Container>
-          </form>
+            <Form.Group className="m-3">
+              <InputGroup>
+                <Form.Control
+                  placeholder="Add a new title"
+                  type="text"
+                  onChange={(e) => setTodo(e.target.value)}
+                  value={todo}
+                  ref={inputRef}
+                />{" "}
+                <Button disabled={!todo} type="submit" className="ml-3">
+                  {Add}
+                </Button>{" "}
+              </InputGroup>
+            </Form.Group>
+          </Form>
           <Table bordered hover responsive="lg" size="lg" variant="dark">
             <thead>
               <tr>
@@ -143,34 +144,54 @@ const List = () => {
                         value={detailsText ? detailsText : " "}
                       />
                     ) : (
-                      <>{details && details.substr(0, 100) + "....."}</>
+                      <>
+                        {details &&
+                          (details.length < 50
+                            ? details
+                            : details.substr(0, 50) + ".....")}
+                      </>
                     )}
                   </td>
                   <td>
-                    {confirmDelete ? (
+                    {deleteConfirmation === id ? (
                       <SweetAlert
                         warning
                         showCancel
                         confirmBtnText="Yes, delete it!"
                         confirmBtnBsStyle="danger"
                         title="Are you sure?"
+                        style={{ backgroundColor: "#454d55" }}
                         onConfirm={() => {
                           deleteTodo(id);
-                          setConfirmDelete(false);
+                          setDeleteConfirmation(false);
                         }}
                         onCancel={() => {
-                          setConfirmDelete(false);
+                          setDeleteConfirmation(false);
                         }}
                       >
-                        Delete this?
+                        You will not be able to recover this imaginary file!
                       </SweetAlert>
                     ) : (
+                      // <SweetAlert
+                      //   showCloseButton
+                      //   title="Are you sure?"
+                      //   showCancel
+                      //   confirmBtnText="Yes, delete it!"
+                      //   confirmBtnBsStyle="danger"
+                      //   onConfirm={() => {
+                      //     deleteTodo(id);
+                      //     setDeleteConfirmation(false);
+                      //   }}
+                      //   onCancel={() => {
+                      //     setDeleteConfirmation(false);
+                      //   }}
+                      // ></SweetAlert>
                       " "
                     )}
                     <Button
                       variant="danger"
                       onClick={() => {
-                        setConfirmDelete(true);
+                        setDeleteConfirmation(id);
                       }}
                     >
                       {Delete}

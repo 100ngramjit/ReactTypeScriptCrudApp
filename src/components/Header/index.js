@@ -13,9 +13,12 @@ const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-dark justify-content-between">
       <Container>
-        <div className="p-2 bg-gradient-dark text-white">
-          {stateProvider.displayName} {LoggedIn}
-        </div>
+        <Link to="/dashboard">
+          {" "}
+          <div className="p-2 bg-gradient-dark text-white">
+            {stateProvider.displayName} {LoggedIn}
+          </div>
+        </Link>
       </Container>
       <Container></Container>
       <Link to="/dashboard">

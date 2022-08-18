@@ -29,27 +29,26 @@ const BlogList = () => {
       <h3>{Blogs}</h3>
       <Row xs={1} md={2} lg={3} className="g-4">
         {blogs.data.data ? (
-          blogs.data.data.map(({ title, details, id }) => (
-            <Col key={id}>
-              <Card
-                style={{ width: "20rem", margin: "1rem" }}
-                bg="dark"
-                text="light"
-              >
-                {details ? (
-                  <Card.Body>
-                    <Card.Title>{title}</Card.Title>
-                    <hr />
-                    <Card.Text>
-                      {details.substr(0, 250) + "....."}
-                    </Card.Text>{" "}
-                  </Card.Body>
-                ) : (
-                  ""
-                )}
-              </Card>
-            </Col>
-          ))
+          blogs.data.data.map(
+            ({ title, details, id }) =>
+              details && (
+                <Col key={id}>
+                  <Card
+                    style={{ width: "20rem", margin: "1rem" }}
+                    bg="dark"
+                    text="light"
+                  >
+                    <Card.Body>
+                      <Card.Title>{title}</Card.Title>
+                      <hr />
+                      <Card.Text>
+                        {details.substr(0, 250) + "....."}
+                      </Card.Text>{" "}
+                    </Card.Body>
+                  </Card>
+                </Col>
+              )
+          )
         ) : (
           <Skeleton count={20} />
         )}
