@@ -67,7 +67,6 @@ const BlogDetails = () => {
                   <Button
                     onClick={() => {
                       editTodo(blog);
-                      getBlog(blog.id);
                     }}
                   >
                     {SubmitEdits}

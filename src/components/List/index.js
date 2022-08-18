@@ -201,7 +201,6 @@ const List = () => {
                         <Button
                           onClick={() => {
                             editTodo(id);
-                            getData();
                           }}
                           disabled={!titleText}
                         >
