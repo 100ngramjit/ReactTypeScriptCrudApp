@@ -27,12 +27,12 @@ function Login(props) {
     getValues,
   } = useForm();
 
-  const auth = JSON.parse(localStorage.getItem("auth"));
+  let auth = JSON.parse(localStorage.getItem("auth"));
 
   const handleLogin = () => {
     const values = getValues();
     if (auth === null) {
-      toast.error("no user found!");
+      auth = [{ username: "", password: "" }];
     }
 
     const same = auth.filter((d) => d.username === values.email);
