@@ -44,8 +44,7 @@ const BlogDetails = () => {
       {Object.keys(blog).length ? (
         <Card style={{ margin: "1rem" }} bg="dark" text="light">
           <Card.Body>
-            <Card.Title>{blog.title}</Card.Title>{" "}
-            {blog.details.substr(0, 250) + "....."}
+            <Card.Title>{blog.title}</Card.Title> {blog.details}
             {isEditing ? (
               <div>
                 <input

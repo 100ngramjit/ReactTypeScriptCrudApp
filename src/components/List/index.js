@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
-import { SweetAlert } from "react-bootstrap-sweetalert";
+import SweetAlert from "react-bootstrap-sweetalert";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import {
@@ -29,13 +29,14 @@ const List = () => {
   const [detailsText, setDetailsText] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const getData = async () => {
-    await axios.get(baseURL).then((resp) => setTodos(resp.data.data));
+  const getData = () => {
+    getBlogs(baseURL).then((resp) => setTodos(resp.data.data));
   };
 
   const inputRef = useRef(null);
   useEffect(() => {
     getData();
+
     // inputRef.current.focus();
   }, []);
 
@@ -76,8 +77,6 @@ const List = () => {
       .then(() => {
         toast.success("Edited Successfully");
         setIsEditing(null);
-        // setTitleText("");
-        // setDetailsText("");
         getData();
       })
       .catch((err) => toast.error(err));
@@ -85,7 +84,6 @@ const List = () => {
 
   return (
     <Container>
-      {/* <h3>Todo List</h3> */}
       {todos.length ? (
         <>
           <form
@@ -149,15 +147,7 @@ const List = () => {
                     )}
                   </td>
                   <td>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        deleteTodo(id);
-                      }}
-                    >
-                      {Delete}
-                    </Button>{" "}
-                    {/* {confirmDelete ? (
+                    {confirmDelete ? (
                       <SweetAlert
                         warning
                         showCancel
@@ -166,16 +156,25 @@ const List = () => {
                         title="Are you sure?"
                         onConfirm={() => {
                           deleteTodo(id);
+                          setConfirmDelete(false);
                         }}
-                        onCancel={()=>{
-                          setConfirmDelete(false)
+                        onCancel={() => {
+                          setConfirmDelete(false);
                         }}
                       >
-                        You will not be able to recover this imaginary file!
+                        Delete this?
                       </SweetAlert>
                     ) : (
                       " "
-                    )} */}
+                    )}
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        setConfirmDelete(true);
+                      }}
+                    >
+                      {Delete}
+                    </Button>{" "}
                     {isEditing === id ? (
                       <div>
                         <Button
