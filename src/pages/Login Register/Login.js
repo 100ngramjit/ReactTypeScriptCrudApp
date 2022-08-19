@@ -8,14 +8,14 @@ import {
   Card,
   InputGroup,
 } from "react-bootstrap";
-import { Register, LogIn, Email, Password } from "components/Constants";
+import { Register, LogIn, Email, Password } from "constants/Constants";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { LoginContext } from "context/LoginState";
 import { toast } from "react-hot-toast";
 import { Navigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-function Login(props) {
+const Login = () => {
   const stateProvider = useContext(LoginContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -130,6 +130,6 @@ function Login(props) {
       </Row>
     </Container>
   );
-}
+};
 
 export default Login;

@@ -16,12 +16,12 @@ import {
   Email,
   Password,
   ConfirmPassword,
-} from "components/Constants";
+} from "constants/Constants";
 import { LoginContext } from "context/LoginState";
 import { Navigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-function Signup(props) {
+const Signup = () => {
   const stateProvider = useContext(LoginContext);
   const [username, setUsername] = useState("");
   const [password1, setPassword1] = useState("");
@@ -44,7 +44,6 @@ function Signup(props) {
     const values = getValues();
     if (values.password1 === values.password2) {
       const same = auth.filter((d) => d.username === values.email);
-      console.log(same);
       if (same.length === 0) {
         auth = [
           ...auth,
@@ -157,7 +156,7 @@ function Signup(props) {
                     </InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
-                {errors.password1 && (
+                {errors.password2 && (
                   <p className="text-danger">Please check the Password</p>
                 )}
                 <Button type="submit">{Register}</Button>{" "}
@@ -174,6 +173,6 @@ function Signup(props) {
       </Row>
     </Container>
   );
-}
+};
 
 export default Signup;

@@ -15,7 +15,7 @@ import {
   Delete,
   Cancel,
   SubmitEdits,
-} from "components/Constants";
+} from "constants/Constants";
 import { getBlogs } from "services/apiService";
 import { Link } from "react-router-dom";
 import { Container, Button, Table, Form, InputGroup } from "react-bootstrap";
@@ -28,14 +28,23 @@ const List = () => {
   const [titleText, setTitleText] = useState("");
   const [detailsText, setDetailsText] = useState("");
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getData = () => {
-    getBlogs(baseURL).then((resp) => setTodos(resp.data.data));
+    getBlogs(baseURL)
+      .then((resp) => {
+        setTodos(resp.data.data);
+        console.log(todos);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   const inputRef = useRef(null);
   useEffect(() => {
-    // inputRef.current.focus();
     getData();
   }, []);
 
@@ -83,164 +92,154 @@ const List = () => {
 
   return (
     <Container>
-      {todos.length ? (
-        <>
-          <Form
-            className="text-center"
-            onSubmit={(e) => {
-              handleSubmit(e);
-            }}
-          >
-            <Form.Group className="m-3">
-              <InputGroup>
-                <Form.Control
-                  placeholder="Add a new title"
-                  type="text"
-                  onChange={(e) => setTodo(e.target.value)}
-                  value={todo}
-                  ref={inputRef}
-                />{" "}
-                <Button disabled={!todo} type="submit" className="ml-3">
-                  {Add}
-                </Button>{" "}
-              </InputGroup>
-            </Form.Group>
-          </Form>
-          <Table bordered hover responsive="lg" size="lg" variant="dark">
-            <thead>
-              <tr>
-                <th>{Index}</th>
-                <th>{Title}</th>
-                <th>{Description}</th>
-                <th style={{ width: "250px" }}>{Actions}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {todos.map(({ title, details, id }, index) => (
-                <tr key={id}>
-                  <td>{index + 1}</td>
-                  <td>
-                    {isEditing === id ? (
-                      <div>
+      {!isLoading ? (
+        todos.length ? (
+          <>
+            <Form
+              className="text-center"
+              onSubmit={(e) => {
+                handleSubmit(e);
+              }}
+            >
+              <Form.Group className="m-3">
+                <InputGroup>
+                  <Form.Control
+                    placeholder="Add a new title"
+                    type="text"
+                    onChange={(e) => setTodo(e.target.value)}
+                    value={todo}
+                    ref={inputRef}
+                  />{" "}
+                  <Button disabled={!todo} type="submit" className="ml-3">
+                    {Add}
+                  </Button>{" "}
+                </InputGroup>
+              </Form.Group>
+            </Form>
+            <Table bordered hover responsive="lg" size="lg" variant="dark">
+              <thead>
+                <tr>
+                  <th>{Index}</th>
+                  <th>{Title}</th>
+                  <th>{Description}</th>
+                  <th style={{ width: "250px" }}>{Actions}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {todos.map(({ title, details, id }, index) => (
+                  <tr key={id}>
+                    <td>{index + 1}</td>
+                    <td>
+                      {isEditing === id ? (
+                        <div>
+                          <textarea
+                            type="text"
+                            onChange={(e) => setTitleText(e.target.value)}
+                            placeholder="edit title"
+                            value={titleText ? titleText : " "}
+                          />
+                        </div>
+                      ) : (
+                        <div>{title}</div>
+                      )}
+                    </td>
+                    <td>
+                      {isEditing === id ? (
                         <textarea
                           type="text"
-                          onChange={(e) => setTitleText(e.target.value)}
-                          placeholder="edit title"
-                          value={titleText ? titleText : " "}
+                          placeholder="edit details"
+                          onChange={(e) => {
+                            setDetailsText(e.target.value);
+                          }}
+                          value={detailsText ? detailsText : " "}
                         />
-                      </div>
-                    ) : (
-                      <div>{title}</div>
-                    )}
-                  </td>
-                  <td>
-                    {isEditing === id ? (
-                      <textarea
-                        type="text"
-                        placeholder="edit details"
-                        onChange={(e) => {
-                          setDetailsText(e.target.value);
-                        }}
-                        value={detailsText ? detailsText : " "}
-                      />
-                    ) : (
-                      <>
-                        {details &&
-                          (details.length < 50
-                            ? details
-                            : details.substr(0, 50) + ".....")}
-                      </>
-                    )}
-                  </td>
-                  <td>
-                    {deleteConfirmation === id ? (
-                      <SweetAlert
-                        warning
-                        showCancel
-                        confirmBtnText="Yes, delete it!"
-                        confirmBtnBsStyle="danger"
-                        title="Are you sure?"
-                        style={{ backgroundColor: "#454d55" }}
-                        onConfirm={() => {
-                          deleteTodo(id);
-                          setDeleteConfirmation(false);
-                        }}
-                        onCancel={() => {
-                          setDeleteConfirmation(false);
+                      ) : (
+                        <>
+                          {details &&
+                            (details.length < 50
+                              ? details
+                              : details.substr(0, 50) + ".....")}
+                        </>
+                      )}
+                    </td>
+                    <td>
+                      {deleteConfirmation === id ? (
+                        <SweetAlert
+                          showCancel
+                          confirmBtnText="Yes, delete it!"
+                          confirmBtnBsStyle="danger"
+                          cancelBtnBsStyle="secondary"
+                          title="Are you sure?"
+                          style={{ backgroundColor: "#454d55" }}
+                          onConfirm={() => {
+                            deleteTodo(id);
+                            setDeleteConfirmation(false);
+                          }}
+                          onCancel={() => {
+                            setDeleteConfirmation(false);
+                          }}
+                        >
+                          This entry will be permanently deleted
+                        </SweetAlert>
+                      ) : (
+                        " "
+                      )}
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          setDeleteConfirmation(id);
                         }}
                       >
-                        You will not be able to recover this imaginary file!
-                      </SweetAlert>
-                    ) : (
-                      // <SweetAlert
-                      //   showCloseButton
-                      //   title="Are you sure?"
-                      //   showCancel
-                      //   confirmBtnText="Yes, delete it!"
-                      //   confirmBtnBsStyle="danger"
-                      //   onConfirm={() => {
-                      //     deleteTodo(id);
-                      //     setDeleteConfirmation(false);
-                      //   }}
-                      //   onCancel={() => {
-                      //     setDeleteConfirmation(false);
-                      //   }}
-                      // ></SweetAlert>
-                      " "
-                    )}
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        setDeleteConfirmation(id);
-                      }}
-                    >
-                      {Delete}
-                    </Button>{" "}
-                    {isEditing === id ? (
-                      <div>
-                        <Button
-                          onClick={() => {
-                            editTodo(id);
-                          }}
-                          disabled={!titleText}
-                        >
-                          {SubmitEdits}
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            setIsEditing(null);
-                          }}
-                          variant="danger"
-                        >
-                          {Cancel}
-                        </Button>
-                      </div>
-                    ) : (
-                      <>
-                        <Button
-                          variant="secondary"
-                          onClick={() => {
-                            setIsEditing(id);
-                            setTitleText(title);
-                            setDetailsText(details);
-                            getData();
-                          }}
-                        >
-                          {Edit}
-                        </Button>{" "}
-                      </>
-                    )}
-                    <Link to={`/dashboard/${id}`}>
-                      <Button variant="info">{View}</Button>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </>
+                        {Delete}
+                      </Button>{" "}
+                      {isEditing === id ? (
+                        <div>
+                          <Button
+                            onClick={() => {
+                              editTodo(id);
+                            }}
+                            disabled={!titleText}
+                          >
+                            {SubmitEdits}
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              setIsEditing(null);
+                            }}
+                            variant="danger"
+                          >
+                            {Cancel}
+                          </Button>
+                        </div>
+                      ) : (
+                        <>
+                          <Button
+                            variant="secondary"
+                            onClick={() => {
+                              setIsEditing(id);
+                              setTitleText(title);
+                              setDetailsText(details);
+                              getData();
+                            }}
+                          >
+                            {Edit}
+                          </Button>{" "}
+                        </>
+                      )}
+                      <Link to={`/dashboard/${id}`}>
+                        <Button variant="info">{View}</Button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </>
+        ) : (
+          <div>no results</div>
+        )
       ) : (
-        <Skeleton count={20} />
+        <Skeleton count={20} height={40} baseColor="grey" duration={3} />
       )}
     </Container>
   );

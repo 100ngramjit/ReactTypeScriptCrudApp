@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { LoginContext } from "context/LoginState";
-import { Home, Blogs, LoggedIn, Logout } from "components/Constants";
+import { Home, Blogs, LoggedIn, Logout } from "constants/Constants";
 import { Button, Nav, Container } from "react-bootstrap";
 import { Navigate, Link } from "react-router-dom";
 

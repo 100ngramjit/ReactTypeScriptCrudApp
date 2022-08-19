@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { Cancel, SubmitEdits, Edit } from "components/Constants";
+import { Cancel, SubmitEdits, Edit } from "constants/Constants";
 import { Container, Button, Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
@@ -44,7 +44,7 @@ const BlogDetails = () => {
       {Object.keys(blog).length ? (
         <Card style={{ margin: "1rem" }} bg="dark" text="light">
           <Card.Body>
-            <Card.Title>{blog.title}</Card.Title> {blog.details}
+            <Card.Title>{blog?.title}</Card.Title> {blog?.details}
             {isEditing ? (
               <div>
                 <input
@@ -91,7 +91,7 @@ const BlogDetails = () => {
           </Card.Body>
         </Card>
       ) : (
-        <Skeleton count={30} />
+        <Skeleton count={30} height={40} baseColor="grey" />
       )}
     </Container>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { Blogs } from "components/Constants";
+import { Blogs } from "constants/Constants";
 import Skeleton from "react-loading-skeleton";
 import { Container, Card, CardGroup, Col, Row } from "react-bootstrap";
 
@@ -50,7 +50,7 @@ const BlogList = () => {
               )
           )
         ) : (
-          <Skeleton count={20} />
+          <Skeleton count={20} height={40} baseColor="grey" />
         )}
       </Row>
     </Container>
