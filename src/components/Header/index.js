@@ -1,6 +1,11 @@
 import React, { useState, useContext } from "react";
 import { LoginContext } from "context/LoginState";
-import { Home, Blogs, LoggedIn, Logout } from "constants/Constants";
+import {
+  LABEL_BLOGS,
+  LABEL_HOME,
+  LABEL_LOGGED_IN,
+  LABEL_LOGOUT,
+} from "constants/Constants";
 import { Button, Nav, Container } from "react-bootstrap";
 import { Navigate, Link } from "react-router-dom";
 
@@ -16,19 +21,19 @@ const Header = () => {
         <Link to="/dashboard">
           {" "}
           <div className="p-2 bg-gradient-dark text-white">
-            {stateProvider.displayName} {LoggedIn}
+            {stateProvider.displayName} {LABEL_LOGGED_IN}
           </div>
         </Link>
       </Container>
       <Container></Container>
       <Link to="/dashboard">
-        <Button variant="dark">{Home}</Button>
+        <Button variant="dark">{LABEL_HOME}</Button>
       </Link>
       <Link to="/dashboard/list">
-        <Button variant="dark">{Blogs}</Button>
+        <Button variant="dark">{LABEL_BLOGS}</Button>
       </Link>
       <Button onClick={afterLogout} variant="danger">
-        {Logout}
+        {LABEL_LOGOUT}
       </Button>
       {/*Add bootstrap components*/}
       {!stateProvider.isUserLoggedIn ? <Navigate to="/" replace /> : ""}

@@ -5,16 +5,18 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import {
-  Add,
-  Edit,
-  View,
-  Index,
-  Description,
-  Actions,
-  Title,
-  Delete,
-  Cancel,
-  SubmitEdits,
+  LABEL_ADD,
+  LABEL_EDIT,
+  LABEL_VIEW,
+  LABEL_INDEX,
+  LABEL_DESCRIPTION,
+  LABEL_ACTIONS,
+  LABEL_TITLE,
+  LABEL_DELETE,
+  LABEL_CANCEL,
+  LABEL_SUBMIT_EDITS,
+  LABEL_NO_RESULTS,
+  LABEL_PERMANENT_DELETION,
 } from "constants/Constants";
 import { getBlogs } from "services/apiService";
 import { Link } from "react-router-dom";
@@ -34,7 +36,6 @@ const List = () => {
     getBlogs(baseURL)
       .then((resp) => {
         setTodos(resp.data.data);
-        console.log(todos);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -111,7 +112,7 @@ const List = () => {
                     ref={inputRef}
                   />{" "}
                   <Button disabled={!todo} type="submit" className="ml-3">
-                    {Add}
+                    {LABEL_ADD}
                   </Button>{" "}
                 </InputGroup>
               </Form.Group>
@@ -119,10 +120,10 @@ const List = () => {
             <Table bordered hover responsive="lg" size="lg" variant="dark">
               <thead>
                 <tr>
-                  <th>{Index}</th>
-                  <th>{Title}</th>
-                  <th>{Description}</th>
-                  <th style={{ width: "250px" }}>{Actions}</th>
+                  <th>{LABEL_INDEX}</th>
+                  <th>{LABEL_TITLE}</th>
+                  <th>{LABEL_DESCRIPTION}</th>
+                  <th style={{ width: "250px" }}>{LABEL_ACTIONS}</th>
                 </tr>
               </thead>
               <tbody>
@@ -179,7 +180,7 @@ const List = () => {
                             setDeleteConfirmation(false);
                           }}
                         >
-                          This entry will be permanently deleted
+                          {LABEL_PERMANENT_DELETION}
                         </SweetAlert>
                       ) : (
                         " "
@@ -190,7 +191,7 @@ const List = () => {
                           setDeleteConfirmation(id);
                         }}
                       >
-                        {Delete}
+                        {LABEL_DELETE}
                       </Button>{" "}
                       {isEditing === id ? (
                         <div>
@@ -200,7 +201,7 @@ const List = () => {
                             }}
                             disabled={!titleText}
                           >
-                            {SubmitEdits}
+                            {LABEL_SUBMIT_EDITS}
                           </Button>
                           <Button
                             onClick={() => {
@@ -208,7 +209,7 @@ const List = () => {
                             }}
                             variant="danger"
                           >
-                            {Cancel}
+                            {LABEL_CANCEL}
                           </Button>
                         </div>
                       ) : (
@@ -222,12 +223,12 @@ const List = () => {
                               getData();
                             }}
                           >
-                            {Edit}
+                            {LABEL_EDIT}
                           </Button>{" "}
                         </>
                       )}
                       <Link to={`/dashboard/${id}`}>
-                        <Button variant="info">{View}</Button>
+                        <Button variant="info">{LABEL_VIEW}</Button>
                       </Link>
                     </td>
                   </tr>
@@ -236,7 +237,7 @@ const List = () => {
             </Table>
           </>
         ) : (
-          <div>no results</div>
+          <div>{LABEL_NO_RESULTS}</div>
         )
       ) : (
         <Skeleton count={20} height={40} baseColor="grey" duration={3} />

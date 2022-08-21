@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { Blogs } from "constants/Constants";
+import { LABEL_BLOGS } from "constants/Constants";
 import Skeleton from "react-loading-skeleton";
 import { Container, Card, CardGroup, Col, Row } from "react-bootstrap";
 
@@ -26,7 +26,7 @@ const BlogList = () => {
   }, []);
   return (
     <Container>
-      <h3>{Blogs}</h3>
+      <h3 className="text-light">{LABEL_BLOGS}</h3>
       <Row xs={1} md={2} lg={3} className="g-4">
         {blogs.data.data ? (
           blogs.data.data.map(

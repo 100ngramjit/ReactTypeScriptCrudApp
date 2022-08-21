@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { Cancel, SubmitEdits, Edit } from "constants/Constants";
+import {
+  LABEL_CANCEL,
+  LABEL_EDIT,
+  LABEL_SUBMIT_EDITS,
+} from "constants/Constants";
 import { Container, Button, Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
@@ -69,10 +73,10 @@ const BlogDetails = () => {
                       editTodo(blog);
                     }}
                   >
-                    {SubmitEdits}
+                    {LABEL_SUBMIT_EDITS}
                   </Button>{" "}
                   <Button variant="danger" onClick={() => setIsEditing(false)}>
-                    {Cancel}
+                    {LABEL_CANCEL}
                   </Button>
                 </>
               ) : (
@@ -84,7 +88,7 @@ const BlogDetails = () => {
                     setDetailsText(blog.details);
                   }}
                 >
-                  {Edit}
+                  {LABEL_EDIT}
                 </Button>
               )}
             </p>

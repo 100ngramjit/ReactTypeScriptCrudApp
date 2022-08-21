@@ -11,11 +11,11 @@ import {
 import { toast } from "react-hot-toast";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import {
-  Register,
-  LogIn,
-  Email,
-  Password,
-  ConfirmPassword,
+  LABEL_EMAIL,
+  LABEL_LOGIN,
+  LABEL_REGISTER,
+  LABEL_PASSWORD,
+  LABEL_CONIRM_PASSWORD,
 } from "constants/Constants";
 import { LoginContext } from "context/LoginState";
 import { Navigate, Link } from "react-router-dom";
@@ -81,15 +81,14 @@ const Signup = () => {
           >
             <Card.Body>
               <Form onSubmit={handleSubmit(handleSignup)}>
-                <h3>{Register}</h3>
+                <h3>{LABEL_REGISTER}</h3>
                 <hr />
                 <Form.Group controlId="username">
-                  <Form.Label>{Email}</Form.Label>
+                  <Form.Label>{LABEL_EMAIL}</Form.Label>
                   <Form.Control
                     type="text"
-                    // value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Username"
+                    placeholder="Email"
                     className="m-2 p-10"
                     {...register("email", {
                       required: true,
@@ -102,11 +101,10 @@ const Signup = () => {
                   <p className="text-danger">Please check the Email</p>
                 )}
                 <Form.Group controlId="password1">
-                  <Form.Label>{Password}</Form.Label>
+                  <Form.Label>{LABEL_PASSWORD}</Form.Label>
                   <InputGroup className="m-2">
                     <Form.Control
                       type={showHideToggle1 ? "password" : "text"}
-                      // value={password1}
                       onChange={(e) => setPassword1(e.target.value)}
                       placeholder="Add password"
                       {...register("password1", {
@@ -131,11 +129,10 @@ const Signup = () => {
                   <p className="text-danger">Please check the Password</p>
                 )}
                 <Form.Group controlId="password2">
-                  <Form.Label>{ConfirmPassword}</Form.Label>
+                  <Form.Label>{LABEL_CONIRM_PASSWORD}</Form.Label>
                   <InputGroup className="m-2">
                     <Form.Control
                       type={showHideToggle2 ? "password" : "text"}
-                      // value={password2}
                       onChange={(e) => setPassword2(e.target.value)}
                       placeholder="Confirm password"
                       {...register("password2", {
@@ -159,10 +156,10 @@ const Signup = () => {
                 {errors.password2 && (
                   <p className="text-danger">Please check the Password</p>
                 )}
-                <Button type="submit">{Register}</Button>{" "}
+                <Button type="submit">{LABEL_REGISTER}</Button>{" "}
                 <Link to="/">
                   <Button type="button" variant="info">
-                    {LogIn}
+                    {LABEL_LOGIN}
                   </Button>
                 </Link>
               </Form>

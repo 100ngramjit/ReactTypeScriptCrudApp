@@ -8,7 +8,12 @@ import {
   Card,
   InputGroup,
 } from "react-bootstrap";
-import { Register, LogIn, Email, Password } from "constants/Constants";
+import {
+  LABEL_EMAIL,
+  LABEL_LOGIN,
+  LABEL_PASSWORD,
+  LABEL_REGISTER,
+} from "constants/Constants";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { LoginContext } from "context/LoginState";
 import { toast } from "react-hot-toast";
@@ -50,9 +55,6 @@ const Login = () => {
       toast.error(values.email + "user not exist!");
     }
   };
-  // useEffect(() => {
-  //   stateProvider.setIsUserLoggedIn(false);
-  // }, []);
 
   return (
     <Container>
@@ -70,13 +72,12 @@ const Login = () => {
           >
             <Card.Body>
               <Form onSubmit={handleSubmit(handleLogin)}>
-                <h3>{LogIn}</h3>
+                <h3>{LABEL_LOGIN}</h3>
                 <hr />
                 <Form.Group controlId="username">
-                  <Form.Label>{Email}</Form.Label>
+                  <Form.Label>{LABEL_EMAIL}</Form.Label>
                   <Form.Control
                     type="text"
-                    // value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Email"
                     className="m-1"
@@ -91,11 +92,10 @@ const Login = () => {
                   <p className="text-danger">Please check the Email</p>
                 )}
                 <Form.Group controlId="password1">
-                  <Form.Label>{Password}</Form.Label>
+                  <Form.Label>{LABEL_PASSWORD}</Form.Label>
                   <InputGroup className="m-2">
                     <Form.Control
                       type={passType ? "password" : "text"}
-                      // value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Add password"
                       {...register("password", {
@@ -116,11 +116,11 @@ const Login = () => {
                 )}
                 {"  "}
                 <Button type="submit" disabled={username}>
-                  {LogIn}
+                  {LABEL_LOGIN}
                 </Button>
                 {"  "}
                 <Link to="/register">
-                  <Button variant="info">{Register}</Button>
+                  <Button variant="info">{LABEL_REGISTER}</Button>
                 </Link>
               </Form>
             </Card.Body>
