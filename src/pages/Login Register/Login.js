@@ -58,7 +58,7 @@ const Login = () => {
 
   return (
     <Container>
-      {stateProvider.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}{" "}
+      {stateProvider.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
       <Row>
         <Col />
         <Col>
@@ -114,11 +114,9 @@ const Login = () => {
                 {errors.password && (
                   <p className="text-danger">Please check the Password</p>
                 )}
-                {"  "}
-                <Button type="submit" disabled={username}>
+                <Button type="submit" disabled={username} className="m-2">
                   {LABEL_LOGIN}
                 </Button>
-                {"  "}
                 <Link to="/register">
                   <Button variant="info">{LABEL_REGISTER}</Button>
                 </Link>

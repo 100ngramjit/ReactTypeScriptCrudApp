@@ -111,10 +111,10 @@ const List = () => {
                     onChange={(e) => setTodo(e.target.value)}
                     value={todo}
                     ref={inputRef}
-                  />{" "}
+                  />
                   <Button disabled={!todo} type="submit" className="ml-3">
                     {LABEL_ADD}
-                  </Button>{" "}
+                  </Button>
                 </InputGroup>
               </Form.Group>
             </Form>
@@ -124,7 +124,7 @@ const List = () => {
                   <th>{LABEL_INDEX}</th>
                   <th>{LABEL_TITLE}</th>
                   <th>{LABEL_DESCRIPTION}</th>
-                  <th style={{ width: "250px" }}>{LABEL_ACTIONS}</th>
+                  <th style={{ width: "260px" }}>{LABEL_ACTIONS}</th>
                 </tr>
               </thead>
               <tbody>
@@ -191,9 +191,10 @@ const List = () => {
                         onClick={() => {
                           setDeleteConfirmationModalOpen(id);
                         }}
+                        className="m-2"
                       >
                         {LABEL_DELETE}
-                      </Button>{" "}
+                      </Button>
                       {isEditing === id ? (
                         <div>
                           <Button
@@ -201,6 +202,7 @@ const List = () => {
                               editTodo(id);
                             }}
                             disabled={!titleText}
+                            className="m-2"
                           >
                             {LABEL_SUBMIT_EDITS}
                           </Button>
@@ -209,6 +211,7 @@ const List = () => {
                               setIsEditing(null);
                             }}
                             variant="danger"
+                            className="m-2"
                           >
                             {LABEL_CANCEL}
                           </Button>
@@ -222,13 +225,16 @@ const List = () => {
                               setTitleText(title);
                               setDetailsText(details);
                             }}
+                            className="m-2"
                           >
                             {LABEL_EDIT}
-                          </Button>{" "}
+                          </Button>
                         </>
                       )}
                       <Link to={`/dashboard/${id}`}>
-                        <Button variant="info">{LABEL_VIEW}</Button>
+                        <Button variant="info" className="m-2">
+                          {LABEL_VIEW}
+                        </Button>
                       </Link>
                     </td>
                   </tr>

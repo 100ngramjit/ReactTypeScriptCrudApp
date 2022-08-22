@@ -20,7 +20,6 @@ const Header = () => {
       <Container>
         {!stateProvider.isUserLoggedIn ? <Navigate to="/" replace /> : ""}
         <Link to="/dashboard">
-          {" "}
           <div className="p-2 bg-gradient-dark text-white">
             {stateProvider.displayName} {LABEL_LOGGED_IN}
           </div>

@@ -156,7 +156,9 @@ const Signup = () => {
                 {errors.password2 && (
                   <p className="text-danger">Please check the Password</p>
                 )}
-                <Button type="submit">{LABEL_REGISTER}</Button>{" "}
+                <Button type="submit" className="m-2">
+                  {LABEL_REGISTER}
+                </Button>
                 <Link to="/">
                   <Button type="button" variant="info">
                     {LABEL_LOGIN}

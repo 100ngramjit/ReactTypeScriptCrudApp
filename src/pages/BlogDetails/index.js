@@ -19,7 +19,10 @@ const BlogDetails = () => {
   const { id } = useParams();
 
   const getBlog = async (id) => {
-    await axios.get(`${baseURL}/${id}`).then((resp) => setBlog(resp.data));
+    await axios
+      .get(`${baseURL}/${id}`)
+      .then((resp) => setBlog(resp.data))
+      .catch((err) => toast.error(err));
   };
 
   const editTodo = (item) => {
@@ -56,30 +59,37 @@ const BlogDetails = () => {
                   onChange={(e) => setTitleText(e.target.value)}
                   placeholder="edit title"
                   value={titleText}
-                />{" "}
+                  className="m-2"
+                />
                 <input
                   type="text"
                   placeholder="edit details"
                   onChange={(e) => setDetailsText(e.target.value)}
                   value={detailsText}
+                  className="m-2"
                 />
               </div>
             ) : null}
-            <p>
-              {isEditing ? (
-                <>
-                  <Button
-                    onClick={() => {
-                      editTodo(blog);
-                    }}
-                  >
-                    {LABEL_SUBMIT_EDITS}
-                  </Button>{" "}
-                  <Button variant="danger" onClick={() => setIsEditing(false)}>
-                    {LABEL_CANCEL}
-                  </Button>
-                </>
-              ) : (
+            {isEditing ? (
+              <>
+                <Button
+                  onClick={() => {
+                    editTodo(blog);
+                  }}
+                  className="m-2"
+                >
+                  {LABEL_SUBMIT_EDITS}
+                </Button>
+                <Button
+                  variant="danger"
+                  className="m-2"
+                  onClick={() => setIsEditing(false)}
+                >
+                  {LABEL_CANCEL}
+                </Button>
+              </>
+            ) : (
+              <>
                 <Button
                   variant="secondary"
                   onClick={() => {
@@ -87,11 +97,12 @@ const BlogDetails = () => {
                     setTitleText(blog.title);
                     setDetailsText(blog.details);
                   }}
+                  className="m-2"
                 >
                   {LABEL_EDIT}
                 </Button>
-              )}
-            </p>
+              </>
+            )}
           </Card.Body>
         </Card>
       ) : (

@@ -29,7 +29,7 @@ const BlogList = () => {
     <Container id="bloglist">
       <h3 className="text-light">{LABEL_BLOGS}</h3>
       <Row xs={1} md={2} lg={3}>
-        {blogs.data.data ? (
+        {blogs?.data?.data ? (
           blogs.data.data.map(
             ({ title, details, id }) =>
               details && (
@@ -38,9 +38,7 @@ const BlogList = () => {
                     <Card.Body>
                       <Card.Title>{title}</Card.Title>
                       <hr id="divider" />
-                      <Card.Text>
-                        {details.substr(0, 250) + "....."}
-                      </Card.Text>{" "}
+                      <Card.Text>{details.substr(0, 250) + "....."}</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
