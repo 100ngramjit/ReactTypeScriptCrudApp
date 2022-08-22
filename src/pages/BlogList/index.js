@@ -14,7 +14,7 @@ const BlogList = () => {
     return (dispatch) => {
       axios.get(baseURL).then((res) =>
         dispatch({
-          type: "FETCH_DATA",
+          type: "FETCH_DATA_SUCCESS",
           data: res.data,
         })
       );
@@ -24,6 +24,7 @@ const BlogList = () => {
   useEffect(() => {
     dispatch(getData());
   }, []);
+  console.log(blogs);
   return (
     <Container>
       <h3 className="text-light">{LABEL_BLOGS}</h3>
