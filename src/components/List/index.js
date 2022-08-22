@@ -18,12 +18,12 @@ import {
   LABEL_NO_RESULTS,
   LABEL_PERMANENT_DELETION,
 } from "constants/Constants";
+import { baseURL } from "api_urls/ApiLinks";
 import { getBlogs } from "services/apiService";
 import { Link } from "react-router-dom";
 import { Container, Button, Table, Form, InputGroup } from "react-bootstrap";
 
 const List = () => {
-  const baseURL = process.env.REACT_APP_URL;
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState("");
   const [isEditing, setIsEditing] = useState(null);

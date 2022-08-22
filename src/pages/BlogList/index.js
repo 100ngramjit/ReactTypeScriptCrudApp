@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { LABEL_BLOGS } from "constants/Constants";
+import { baseURL } from "api_urls/ApiLinks";
 import Skeleton from "react-loading-skeleton";
 import { Container, Card, CardGroup, Col, Row } from "react-bootstrap";
 
 const BlogList = () => {
-  const baseURL = process.env.REACT_APP_URL;
   const blogs = useSelector((state) => state);
   const dispatch = useDispatch();
 

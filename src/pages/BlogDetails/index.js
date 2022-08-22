@@ -7,11 +7,11 @@ import {
   LABEL_EDIT,
   LABEL_SUBMIT_EDITS,
 } from "constants/Constants";
+import { baseURL } from "api_urls/ApiLinks";
 import { Container, Button, Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
 const BlogDetails = () => {
-  const baseURL = process.env.REACT_APP_URL;
   const [blog, setBlog] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [titleText, setTitleText] = useState("");
