@@ -240,7 +240,7 @@ const List = () => {
           <div>{LABEL_NO_RESULTS}</div>
         )
       ) : (
-        <Skeleton count={20} height={40} baseColor="grey" duration={3} />
+        <Skeleton count={20} height={40} baseColor="#6c757d" duration={3} />
       )}
     </Container>
   );
