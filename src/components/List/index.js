@@ -29,7 +29,8 @@ const List = () => {
   const [isEditing, setIsEditing] = useState(null);
   const [titleText, setTitleText] = useState("");
   const [detailsText, setDetailsText] = useState("");
-  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [isDeleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
+    useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const getData = () => {
@@ -164,7 +165,7 @@ const List = () => {
                       )}
                     </td>
                     <td>
-                      {deleteConfirmation === id ? (
+                      {isDeleteConfirmationModalOpen === id ? (
                         <SweetAlert
                           showCancel
                           confirmBtnText="Yes, delete it!"
@@ -174,10 +175,10 @@ const List = () => {
                           style={{ backgroundColor: "#454d55" }}
                           onConfirm={() => {
                             deleteTodo(id);
-                            setDeleteConfirmation(false);
+                            setDeleteConfirmationModalOpen(false);
                           }}
                           onCancel={() => {
-                            setDeleteConfirmation(false);
+                            setDeleteConfirmationModalOpen(false);
                           }}
                         >
                           {LABEL_PERMANENT_DELETION}
@@ -188,7 +189,7 @@ const List = () => {
                       <Button
                         variant="danger"
                         onClick={() => {
-                          setDeleteConfirmation(id);
+                          setDeleteConfirmationModalOpen(id);
                         }}
                       >
                         {LABEL_DELETE}
@@ -220,7 +221,6 @@ const List = () => {
                               setIsEditing(id);
                               setTitleText(title);
                               setDetailsText(details);
-                              getData();
                             }}
                           >
                             {LABEL_EDIT}
@@ -240,7 +240,7 @@ const List = () => {
           <div>{LABEL_NO_RESULTS}</div>
         )
       ) : (
-        <Skeleton count={20} height={40} baseColor="#6c757d" duration={3} />
+        <Skeleton count={20} height={40} baseColor="#6c757d" />
       )}
     </Container>
   );

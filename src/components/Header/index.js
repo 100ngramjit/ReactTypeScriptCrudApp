@@ -18,6 +18,7 @@ const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-dark justify-content-between">
       <Container>
+        {!stateProvider.isUserLoggedIn ? <Navigate to="/" replace /> : ""}
         <Link to="/dashboard">
           {" "}
           <div className="p-2 bg-gradient-dark text-white">
@@ -25,7 +26,6 @@ const Header = () => {
           </div>
         </Link>
       </Container>
-      <Container></Container>
       <Link to="/dashboard">
         <Button variant="dark">{LABEL_HOME}</Button>
       </Link>
@@ -35,8 +35,6 @@ const Header = () => {
       <Button onClick={afterLogout} variant="danger">
         {LABEL_LOGOUT}
       </Button>
-      {/*Add bootstrap components*/}
-      {!stateProvider.isUserLoggedIn ? <Navigate to="/" replace /> : ""}
     </nav>
   );
 };
