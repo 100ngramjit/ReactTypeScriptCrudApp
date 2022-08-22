@@ -24,7 +24,6 @@ const BlogList = () => {
   useEffect(() => {
     dispatch(getData());
   }, []);
-  console.log(blogs);
   return (
     <Container>
       <h3 className="text-light">{LABEL_BLOGS}</h3>

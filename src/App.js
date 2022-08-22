@@ -12,22 +12,13 @@ import Page404 from "pages/Page404";
 import BlogDetails from "pages/BlogDetails";
 import { LoginState } from "context/LoginState";
 import List from "components/List";
+import Routing from "routes/Routing";
 
 const App = () => {
   return (
     <LoginState>
       <div style={{ backgroundColor: "grey" }}>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="register" element={<Signup />} />
-          <Route path="/dashboard" element={<Layout />}>
-            <Route index element={<List />} />
-            <Route path="list" element={<BlogList />} />
-            <Route path=":id" element={<BlogDetails />} />
-            <Route path="*" element={<Page404 />} />
-          </Route>
-          <Route path="*" element={<Page404 />} />
-        </Routes>
+        <Routing />
       </div>
     </LoginState>
   );
