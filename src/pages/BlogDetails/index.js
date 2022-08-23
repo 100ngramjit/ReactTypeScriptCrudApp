@@ -43,6 +43,12 @@ const BlogDetails = () => {
     }
   };
 
+  const handleEditButtonClick = (blog) => {
+    setIsEditing(true);
+    setTitleText(blog.title);
+    setDetailsText(blog.details);
+  };
+
   useEffect(() => {
     getBlog(id);
   }, []);
@@ -93,9 +99,7 @@ const BlogDetails = () => {
                 <Button
                   variant="secondary"
                   onClick={() => {
-                    setIsEditing(true);
-                    setTitleText(blog.title);
-                    setDetailsText(blog.details);
+                    handleEditButtonClick(blog);
                   }}
                   className="m-2"
                 >

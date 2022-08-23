@@ -31,17 +31,17 @@ const List = () => {
   const [detailsText, setDetailsText] = useState("");
   const [isDeleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
     useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isTodoListLoading, setIsTodoListLoading] = useState(true);
 
   const getData = () => {
     getBlogs(baseURL)
       .then((resp) => {
         setTodos(resp.data.data);
-        setIsLoading(false);
+        setIsTodoListLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        setIsLoading(false);
+        setIsTodoListLoading(false);
       });
   };
 
@@ -73,6 +73,7 @@ const List = () => {
       .delete(`${baseURL}/${id}`)
       .then(() => {
         axios.get(baseURL).then((resp) => setTodos(resp.data.data));
+        setDeleteConfirmationModalOpen(false);
         toast.error("Deleted Successfully ");
       })
       .catch((err) => toast.error(err));
@@ -91,10 +92,14 @@ const List = () => {
       })
       .catch((err) => toast.error(err));
   };
-
+  const handleEditButtonClick = (id, title, details) => {
+    setIsEditing(id);
+    setTitleText(title);
+    setDetailsText(details);
+  };
   return (
     <Container>
-      {!isLoading ? (
+      {!isTodoListLoading ? (
         todos.length ? (
           <>
             <Form
@@ -175,7 +180,6 @@ const List = () => {
                           style={{ backgroundColor: "#454d55" }}
                           onConfirm={() => {
                             deleteTodo(id);
-                            setDeleteConfirmationModalOpen(false);
                           }}
                           onCancel={() => {
                             setDeleteConfirmationModalOpen(false);
@@ -221,9 +225,7 @@ const List = () => {
                           <Button
                             variant="secondary"
                             onClick={() => {
-                              setIsEditing(id);
-                              setTitleText(title);
-                              setDetailsText(details);
+                              handleEditButtonClick(id, title, details);
                             }}
                             className="m-2"
                           >
