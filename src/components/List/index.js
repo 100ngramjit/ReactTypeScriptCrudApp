@@ -34,16 +34,16 @@ const List = () => {
     useState(null);
   const [isTodoListLoading, setIsTodoListLoading] = useState(true);
 
-  const getData = () => {
-    getBlogs(baseURL)
-      .then((resp) => {
+  const getData = async () => {
+    try {
+      await getBlogs(baseURL).then((resp) => {
         setTodos(resp.data.data);
         setIsTodoListLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsTodoListLoading(false);
       });
+    } catch (err) {
+      console.log(err);
+      setIsTodoListLoading(false);
+    }
   };
 
   const inputRef = useRef(null);
@@ -54,44 +54,51 @@ const List = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (todo) {
-      axios
-        .post(baseURL, {
-          title: todo,
-        })
-        .then(() => {
-          setTodo("");
-          getData();
-          toast.success("Added successfully");
-        })
-        .catch((err) => toast.error(err));
+      try {
+        axios
+          .post(baseURL, {
+            title: todo,
+          })
+          .then(() => {
+            setTodo("");
+            getData();
+            toast.success("Added successfully");
+          });
+      } catch (err) {
+        toast.error(err);
+      }
     } else {
       toast.error("Input field empty! please write something before adding");
     }
   };
 
   const deleteTodo = (id) => {
-    axios
-      .delete(`${baseURL}/${id}`)
-      .then(() => {
+    try {
+      axios.delete(`${baseURL}/${id}`).then(() => {
         axios.get(baseURL).then((resp) => setTodos(resp.data.data));
         setDeleteConfirmationModalOpen(false);
         toast.error("Deleted Successfully ");
-      })
-      .catch((err) => toast.error(err));
+      });
+    } catch (err) {
+      toast.error(err);
+    }
   };
 
   const editTodo = (id) => {
-    axios
-      .put(`${baseURL}/${id}`, {
-        title: titleText,
-        details: detailsText,
-      })
-      .then(() => {
-        toast.success("Edited Successfully");
-        setIsEditing(null);
-        getData();
-      })
-      .catch((err) => toast.error(err));
+    try {
+      axios
+        .put(`${baseURL}/${id}`, {
+          title: titleText,
+          details: detailsText,
+        })
+        .then(() => {
+          toast.success("Edited Successfully");
+          setIsEditing(null);
+          getData();
+        });
+    } catch (err) {
+      toast.error(err);
+    }
   };
   const handleEditButtonClick = (id, title, details) => {
     setIsEditing(id);

@@ -1,10 +1,8 @@
 import axios from "axios";
-export const getBlogs = async (url) => {
-  const response = axios.get(url);
-  return await response;
+export const getBlogs = (url) => {
+  return axios.get(url);
 };
 
-export const getBlogById = async (url, id) => {
-  const response = axios.get(`${url}/${id}`);
-  return await response;
+export const getBlogById = (url, id) => {
+  return axios.get(`${url}/${id}`);
 };

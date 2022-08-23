@@ -19,11 +19,6 @@ const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-dark justify-content-between">
       <Container>
-        {!stateProvider.isUserLoggedIn ? (
-          <Navigate to={URL_ROOT} replace />
-        ) : (
-          ""
-        )}
         <Link to={URL_DASHBOARD}>
           <div className="p-2 bg-gradient-dark text-white">
             {stateProvider.displayName} {LABEL_LOGGED_IN}

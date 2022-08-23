@@ -19,27 +19,32 @@ const BlogDetails = () => {
   const [detailsText, setDetailsText] = useState("");
   const { id } = useParams();
 
-  const getBlog = (id) => {
-    getBlogById(baseURL, id)
-      .then((resp) => setBlog(resp.data))
-      .catch((err) => toast.error(err));
+  const getBlog = async (id) => {
+    try {
+      await getBlogById(baseURL, id).then((resp) => setBlog(resp.data));
+    } catch (err) {
+      toast.error(err);
+    }
   };
 
   const editTodo = (item) => {
     if (item) {
-      axios
-        .put(`${baseURL}/${item.id}`, {
-          title: titleText,
-          details: detailsText,
-        })
-        .then(() => {
-          setIsEditing(false);
-          setTitleText("");
-          setDetailsText("");
-          getBlog(item.id);
-          toast.success("Edited Successfully");
-        })
-        .catch((err) => console.log(err));
+      try {
+        axios
+          .put(`${baseURL}/${item.id}`, {
+            title: titleText,
+            details: detailsText,
+          })
+          .then(() => {
+            setIsEditing(false);
+            setTitleText("");
+            setDetailsText("");
+            getBlog(item.id);
+            toast.success("Edited Successfully");
+          });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

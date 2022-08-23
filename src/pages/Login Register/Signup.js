@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import "./index.scss";
 import {
   Form,
   Button,
@@ -74,9 +75,8 @@ const Signup = () => {
       ) : (
         ""
       )}
-      <Row>
-        <Col />
-        <Col>
+      <Row className="justify-content-md-center">
+        <Col xs={4}>
           <Card
             style={{
               margin: "1rem",
@@ -88,7 +88,7 @@ const Signup = () => {
             <Card.Body>
               <Form onSubmit={handleSubmit(handleSignup)}>
                 <h3>{LABEL_REGISTER}</h3>
-                <hr />
+                <hr className="line" />
                 <Form.Group controlId="username">
                   <Form.Label>{LABEL_EMAIL}</Form.Label>
                   <Form.Control
@@ -173,7 +173,6 @@ const Signup = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col />
       </Row>
     </Container>
   );
