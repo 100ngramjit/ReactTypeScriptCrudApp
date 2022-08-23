@@ -10,6 +10,7 @@ import {
 import { baseURL } from "api_urls/ApiLinks";
 import { Container, Button, Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
+import { getBlogById } from "services/apiService";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState({});
@@ -18,9 +19,8 @@ const BlogDetails = () => {
   const [detailsText, setDetailsText] = useState("");
   const { id } = useParams();
 
-  const getBlog = async (id) => {
-    await axios
-      .get(`${baseURL}/${id}`)
+  const getBlog = (id) => {
+    getBlogById(baseURL, id)
       .then((resp) => setBlog(resp.data))
       .catch((err) => toast.error(err));
   };

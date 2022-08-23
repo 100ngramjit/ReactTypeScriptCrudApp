@@ -6,6 +6,7 @@ import {
   LABEL_LOGGED_IN,
   LABEL_LOGOUT,
 } from "constants/Constants";
+import { URL_DASHBOARD, URL_LIST, URL_ROOT } from "constants/urlConstants";
 import { Button, Nav, Container } from "react-bootstrap";
 import { Navigate, Link } from "react-router-dom";
 
@@ -18,17 +19,21 @@ const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-dark justify-content-between">
       <Container>
-        {!stateProvider.isUserLoggedIn ? <Navigate to="/" replace /> : ""}
-        <Link to="/dashboard">
+        {!stateProvider.isUserLoggedIn ? (
+          <Navigate to={URL_ROOT} replace />
+        ) : (
+          ""
+        )}
+        <Link to={URL_DASHBOARD}>
           <div className="p-2 bg-gradient-dark text-white">
             {stateProvider.displayName} {LABEL_LOGGED_IN}
           </div>
         </Link>
       </Container>
-      <Link to="/dashboard">
+      <Link to={URL_DASHBOARD}>
         <Button variant="dark">{LABEL_HOME}</Button>
       </Link>
-      <Link to="/dashboard/list">
+      <Link to={URL_LIST}>
         <Button variant="dark">{LABEL_BLOGS}</Button>
       </Link>
       <Button onClick={afterLogout} variant="danger">

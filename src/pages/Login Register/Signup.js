@@ -17,9 +17,11 @@ import {
   LABEL_PASSWORD,
   LABEL_CONIRM_PASSWORD,
 } from "constants/Constants";
+import { emailRegexRule } from "constants/Regex";
 import { LoginContext } from "context/LoginState";
 import { Navigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { URL_DASHBOARD, URL_ROOT } from "constants/urlConstants";
 
 const Signup = () => {
   const stateProvider = useContext(LoginContext);
@@ -67,7 +69,11 @@ const Signup = () => {
   };
   return (
     <Container>
-      {stateProvider.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
+      {stateProvider.isUserLoggedIn ? (
+        <Navigate to={URL_DASHBOARD} replace />
+      ) : (
+        ""
+      )}
       <Row>
         <Col />
         <Col>
@@ -92,8 +98,7 @@ const Signup = () => {
                     className="m-2 p-10"
                     {...register("email", {
                       required: true,
-                      pattern:
-                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      pattern: emailRegexRule,
                     })}
                   />
                 </Form.Group>
@@ -159,7 +164,7 @@ const Signup = () => {
                 <Button type="submit" className="m-2">
                   {LABEL_REGISTER}
                 </Button>
-                <Link to="/">
+                <Link to={URL_ROOT}>
                   <Button type="button" variant="info">
                     {LABEL_LOGIN}
                   </Button>

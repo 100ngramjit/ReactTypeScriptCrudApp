@@ -14,6 +14,8 @@ import {
   LABEL_PASSWORD,
   LABEL_REGISTER,
 } from "constants/Constants";
+import { emailRegexRule } from "constants/Regex";
+import { URL_DASHBOARD, URL_REGISTER } from "constants/urlConstants";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { LoginContext } from "context/LoginState";
 import { toast } from "react-hot-toast";
@@ -58,7 +60,11 @@ const Login = () => {
 
   return (
     <Container>
-      {stateProvider.isUserLoggedIn ? <Navigate to="/dashboard" replace /> : ""}
+      {stateProvider.isUserLoggedIn ? (
+        <Navigate to={URL_DASHBOARD} replace />
+      ) : (
+        ""
+      )}
       <Row>
         <Col />
         <Col>
@@ -83,8 +89,7 @@ const Login = () => {
                     className="m-1"
                     {...register("email", {
                       required: true,
-                      pattern:
-                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      pattern: emailRegexRule,
                     })}
                   />
                 </Form.Group>
@@ -117,7 +122,7 @@ const Login = () => {
                 <Button type="submit" disabled={username} className="m-2">
                   {LABEL_LOGIN}
                 </Button>
-                <Link to="/register">
+                <Link to={URL_REGISTER}>
                   <Button variant="info">{LABEL_REGISTER}</Button>
                 </Link>
               </Form>
