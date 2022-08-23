@@ -22,6 +22,7 @@ import { baseURL } from "api_urls/ApiLinks";
 import { getBlogs } from "services/apiService";
 import { Link } from "react-router-dom";
 import { Container, Button, Table, Form, InputGroup } from "react-bootstrap";
+import { URL_DASHBOARD } from "constants/urlConstants";
 
 const List = () => {
   const [todos, setTodos] = useState([]);
@@ -233,7 +234,7 @@ const List = () => {
                           </Button>
                         </>
                       )}
-                      <Link to={`/dashboard/${id}`}>
+                      <Link to={`${URL_DASHBOARD}/${id}`}>
                         <Button variant="info" className="m-2">
                           {LABEL_VIEW}
                         </Button>
