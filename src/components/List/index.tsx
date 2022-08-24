@@ -72,7 +72,7 @@ const List = () => {
     }
   };
 
-  const deleteTodo = (id) => {
+  function deleteTodo(id) {
     try {
       axios.delete(`${baseURL}/${id}`).then(() => {
         axios.get(baseURL).then((resp) => setTodos(resp.data.data));
@@ -82,7 +82,7 @@ const List = () => {
     } catch (err) {
       toast.error(err);
     }
-  };
+  }
 
   const editTodo = (id) => {
     try {
@@ -148,7 +148,6 @@ const List = () => {
                       {isEditing === id ? (
                         <div>
                           <textarea
-                            type="text"
                             onChange={(e) => setTitleText(e.target.value)}
                             placeholder="edit title"
                             value={titleText ? titleText : " "}
@@ -161,7 +160,6 @@ const List = () => {
                     <td>
                       {isEditing === id ? (
                         <textarea
-                          type="text"
                           placeholder="edit details"
                           onChange={(e) => {
                             setDetailsText(e.target.value);
@@ -192,9 +190,7 @@ const List = () => {
                           onCancel={() => {
                             setDeleteConfirmationModalOpen(false);
                           }}
-                        >
-                          {LABEL_PERMANENT_DELETION}
-                        </SweetAlert>
+                        />
                       ) : (
                         " "
                       )}

@@ -82,7 +82,7 @@ const BlogDetails = () => {
               </div>
             ) : null}
             {isEditing ? (
-              <>
+              <Card.Text>
                 <Button
                   onClick={() => {
                     editTodo(blog);
@@ -98,9 +98,9 @@ const BlogDetails = () => {
                 >
                   {LABEL_CANCEL}
                 </Button>
-              </>
+              </Card.Text>
             ) : (
-              <>
+              <div>
                 <Button
                   variant="secondary"
                   onClick={() => {
@@ -110,7 +110,7 @@ const BlogDetails = () => {
                 >
                   {LABEL_EDIT}
                 </Button>
-              </>
+              </div>
             )}
           </Card.Body>
         </Card>
