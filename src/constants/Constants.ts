@@ -1,4 +1,4 @@
-export const LABEL_SIGNUP = "Signup";
+export const LABEL_SIGNUP: string = "Signup";
 export const LABEL_LOGIN = "Login";
 export const LABEL_REGISTER = "Register";
 export const LABEL_LOGOUT = "Logout";

@@ -19,7 +19,12 @@ import {
   LABEL_PERMANENT_DELETION,
 } from "constants/Constants";
 import { baseURL } from "api_urls/ApiLinks";
-import { getBlogs } from "services/apiService";
+import {
+  DeleteTodoById,
+  getBlogs,
+  EditTodoById,
+  PostTodo,
+} from "services/apiService";
 import { Link } from "react-router-dom";
 import { Container, Button, Table, Form, InputGroup } from "react-bootstrap";
 import { URL_DASHBOARD } from "constants/urlConstants";
@@ -51,19 +56,17 @@ const List = () => {
     getData();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (todo) {
       try {
-        axios
-          .post(baseURL, {
-            title: todo,
-          })
-          .then(() => {
-            setTodo("");
-            getData();
-            toast.success("Added successfully");
-          });
+        const response = await PostTodo(todo);
+        console.log(response);
+        if (response.status === 201) {
+          setTodo("");
+          getData();
+          toast.success("Added successfully");
+        }
       } catch (err) {
         toast.error(err);
       }
@@ -72,35 +75,37 @@ const List = () => {
     }
   };
 
-  function deleteTodo(id) {
+  const deleteTodo = async (id: number) => {
     try {
-      axios.delete(`${baseURL}/${id}`).then(() => {
-        axios.get(baseURL).then((resp) => setTodos(resp.data.data));
+      const response = await DeleteTodoById(id);
+      console.log(response);
+      if (response.status === 204) {
+        getData();
         setDeleteConfirmationModalOpen(false);
         toast.error("Deleted Successfully ");
-      });
-    } catch (err) {
-      toast.error(err);
-    }
-  }
-
-  const editTodo = (id) => {
-    try {
-      axios
-        .put(`${baseURL}/${id}`, {
-          title: titleText,
-          details: detailsText,
-        })
-        .then(() => {
-          toast.success("Edited Successfully");
-          setIsEditing(null);
-          getData();
-        });
+      }
     } catch (err) {
       toast.error(err);
     }
   };
-  const handleEditButtonClick = (id, title, details) => {
+
+  const editTodo = async (id: number) => {
+    try {
+      const response = await EditTodoById(id, titleText, detailsText);
+      if (response.status === 200) {
+        toast.success("Edited Successfully");
+        setIsEditing(null);
+        getData();
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+  const handleEditButtonClick = (
+    id: number,
+    title: string,
+    details: string
+  ) => {
     setIsEditing(id);
     setTitleText(title);
     setDetailsText(details);
@@ -125,7 +130,7 @@ const List = () => {
                     value={todo}
                     ref={inputRef}
                   />
-                  <Button disabled={!todo} type="submit" className="ml-3">
+                  <Button disabled={!todo} type="submit">
                     {LABEL_ADD}
                   </Button>
                 </InputGroup>

@@ -10,7 +10,7 @@ import {
 import { baseURL } from "api_urls/ApiLinks";
 import { Container, Button, Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
-import { getBlogById } from "services/apiService";
+import { getBlogById, EditTodoById } from "services/apiService";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState({});
@@ -21,27 +21,24 @@ const BlogDetails = () => {
 
   const getBlog = async (id) => {
     try {
-      await getBlogById(baseURL, id).then((resp) => setBlog(resp.data));
+      const response = await getBlogById(id);
+      setBlog(response.data);
     } catch (err) {
       toast.error(err);
     }
   };
 
-  const editTodo = (item) => {
+  const editTodo = async (item) => {
     if (item) {
       try {
-        axios
-          .put(`${baseURL}/${item.id}`, {
-            title: titleText,
-            details: detailsText,
-          })
-          .then(() => {
-            setIsEditing(false);
-            setTitleText("");
-            setDetailsText("");
-            getBlog(item.id);
-            toast.success("Edited Successfully");
-          });
+        const response = await EditTodoById(id, titleText, detailsText);
+        if (response.status === 200) {
+          setIsEditing(false);
+          setTitleText("");
+          setDetailsText("");
+          getBlog(item.id);
+          toast.success("Edited Successfully");
+        }
       } catch (err) {
         console.log(err);
       }

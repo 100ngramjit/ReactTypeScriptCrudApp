@@ -31,7 +31,7 @@ const Header = () => {
       <Link to={URL_LIST}>
         <Button variant="dark">{LABEL_BLOGS}</Button>
       </Link>
-      <Button onClick={afterLogout} variant="danger">
+      <Button onClick={afterLogout} variant="danger" className="me-2">
         {LABEL_LOGOUT}
       </Button>
     </nav>
