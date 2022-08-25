@@ -48,8 +48,6 @@ const Login = () => {
     if (same.length !== 0) {
       if (same[0].password === values.password) {
         localStorage.setItem("userlogined", values.email);
-        setUsername("");
-        setPassword("");
         stateProvider.setIsUserLoggedIn(true);
       } else {
         toast.error("wrong password.");
@@ -119,7 +117,11 @@ const Login = () => {
                 {errors.password && (
                   <p className="text-danger">Please check the Password</p>
                 )}
-                <Button type="submit" disabled={username} className="m-2">
+                <Button
+                  type="submit"
+                  disabled={username ? false : true}
+                  className="m-2"
+                >
                   {LABEL_LOGIN}
                 </Button>
                 <Link to={URL_REGISTER}>

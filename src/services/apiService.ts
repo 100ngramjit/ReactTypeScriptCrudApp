@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseURL } from "api_urls/ApiLinks";
+
 export const getBlogs = (url) => {
   return axios.get(url);
 };
@@ -23,4 +24,15 @@ export const PostTodo = (todo) => {
   return axios.post(baseURL, {
     title: todo,
   });
+};
+
+export const getBlogList = () => {
+  return (dispatch) => {
+    axios.get(baseURL).then((res) =>
+      dispatch({
+        type: "FETCH_DATA_SUCCESS",
+        data: res.data,
+      })
+    );
+  };
 };

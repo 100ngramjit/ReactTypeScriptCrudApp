@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./index.scss";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { getBlogList } from "services/apiService";
 import { LABEL_BLOGS } from "constants/Constants";
 import { baseURL } from "api_urls/ApiLinks";
 import Skeleton from "react-loading-skeleton";
@@ -11,20 +12,10 @@ const BlogList = () => {
   const blogs = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const getData = () => {
-    return (dispatch) => {
-      axios.get(baseURL).then((res) =>
-        dispatch({
-          type: "FETCH_DATA_SUCCESS",
-          data: res.data,
-        })
-      );
-    };
-  };
-
   useEffect(() => {
-    dispatch(getData());
+    dispatch(getBlogList());
   }, []);
+
   return (
     <Container id="bloglist">
       <h3 className="text-light">{LABEL_BLOGS}</h3>
