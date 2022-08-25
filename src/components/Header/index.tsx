@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { LoginContext } from "context/LoginState";
 import {
   LABEL_BLOGS,
@@ -6,9 +6,9 @@ import {
   LABEL_LOGGED_IN,
   LABEL_LOGOUT,
 } from "constants/Constants";
-import { URL_DASHBOARD, URL_LIST, URL_ROOT } from "constants/urlConstants";
+import { URL_DASHBOARD, URL_LIST } from "constants/urlConstants";
 import { Button, Nav, Container } from "react-bootstrap";
-import { Navigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const stateProvider = useContext(LoginContext);
@@ -17,7 +17,7 @@ const Header = () => {
     localStorage.removeItem("userlogined");
   };
   return (
-    <nav className="navbar navbar-expand-lg bg-dark justify-content-between">
+    <Nav className="navbar navbar-expand-lg bg-dark justify-content-between">
       <Container>
         <Link to={URL_DASHBOARD}>
           <div className="p-2 bg-gradient-dark text-white">
@@ -34,7 +34,7 @@ const Header = () => {
       <Button onClick={afterLogout} variant="danger" className="me-2">
         {LABEL_LOGOUT}
       </Button>
-    </nav>
+    </Nav>
   );
 };
 

@@ -26,7 +26,7 @@ export const PostTodo = (todo) => {
   });
 };
 
-export const getBlogList = () => {
+export const getBlogList: any = () => {
   return (dispatch) => {
     axios.get(baseURL).then((res) =>
       dispatch({

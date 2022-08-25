@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import "./index.scss";
 import {
   Form,
@@ -119,7 +119,7 @@ const Login = () => {
                 )}
                 <Button
                   type="submit"
-                  disabled={username ? false : true}
+                  disabled={username ? true : false}
                   className="m-2"
                 >
                   {LABEL_LOGIN}

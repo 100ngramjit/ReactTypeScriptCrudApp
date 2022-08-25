@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import "./index.scss";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { getBlogList } from "services/apiService";
 import { LABEL_BLOGS } from "constants/Constants";
-import { baseURL } from "api_urls/ApiLinks";
 import Skeleton from "react-loading-skeleton";
 import { Container, Card, Col, Row } from "react-bootstrap";
 
 const BlogList = () => {
-  const blogs = useSelector((state) => state);
+  const blogs: any = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {

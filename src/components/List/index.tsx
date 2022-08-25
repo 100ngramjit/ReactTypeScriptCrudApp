@@ -3,7 +3,6 @@ import { toast } from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import SweetAlert from "react-bootstrap-sweetalert";
 import "react-loading-skeleton/dist/skeleton.css";
-import axios from "axios";
 import {
   LABEL_ADD,
   LABEL_EDIT,
@@ -16,7 +15,6 @@ import {
   LABEL_CANCEL,
   LABEL_SUBMIT_EDITS,
   LABEL_NO_RESULTS,
-  LABEL_PERMANENT_DELETION,
 } from "constants/Constants";
 import { baseURL } from "api_urls/ApiLinks";
 import {
@@ -61,7 +59,6 @@ const List = () => {
     if (todo) {
       try {
         const response = await PostTodo(todo);
-        console.log(response);
         if (response.status === 201) {
           setTodo("");
           getData();
@@ -78,7 +75,6 @@ const List = () => {
   const deleteTodo = async (id: number) => {
     try {
       const response = await DeleteTodoById(id);
-      console.log(response);
       if (response.status === 204) {
         getData();
         setDeleteConfirmationModalOpen(false);

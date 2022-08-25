@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { LoginContext } from "context/LoginState";
 import Header from "components/Header";
-import { URL_DASHBOARD, URL_LIST, URL_ROOT } from "constants/urlConstants";
-import { Navigate, Link, Outlet } from "react-router-dom";
+import { URL_ROOT } from "constants/urlConstants";
+import { Navigate, Outlet } from "react-router-dom";
 
 const Layout = () => {
   const stateProvider = useContext(LoginContext);

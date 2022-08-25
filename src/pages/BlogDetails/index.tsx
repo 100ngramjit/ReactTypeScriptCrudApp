@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-hot-toast";
 import {
   LABEL_CANCEL,
   LABEL_EDIT,
   LABEL_SUBMIT_EDITS,
 } from "constants/Constants";
-import { baseURL } from "api_urls/ApiLinks";
 import { Container, Button, Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 import { getBlogById, EditTodoById } from "services/apiService";
 
 const BlogDetails = () => {
-  const [blog, setBlog] = useState({});
+  const [blog, setBlog] = useState({
+    createdAt: "",
+    details: "",
+    id: null,
+    title: "",
+    updatedAt: "",
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [titleText, setTitleText] = useState("");
   const [detailsText, setDetailsText] = useState("");
   const { id } = useParams();
 
-  const getBlog = async (id) => {
+  const getBlog = async (id: string) => {
     try {
       const response = await getBlogById(id);
       setBlog(response.data);
@@ -28,7 +32,7 @@ const BlogDetails = () => {
     }
   };
 
-  const editTodo = async (item) => {
+  const editTodo = async (item: any) => {
     if (item) {
       try {
         const response = await EditTodoById(id, titleText, detailsText);
@@ -45,7 +49,7 @@ const BlogDetails = () => {
     }
   };
 
-  const handleEditButtonClick = (blog) => {
+  const handleEditButtonClick = (blog: any) => {
     setIsEditing(true);
     setTitleText(blog.title);
     setDetailsText(blog.details);
@@ -56,7 +60,7 @@ const BlogDetails = () => {
   }, []);
   return (
     <Container>
-      {Object.keys(blog).length ? (
+      {blog.title ? (
         <Card style={{ margin: "1rem" }} bg="dark" text="light">
           <Card.Body>
             <Card.Title>{blog?.title}</Card.Title> {blog?.details}

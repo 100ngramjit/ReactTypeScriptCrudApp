@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import thunk from "redux-thunk";
-import reducer from "./reducer";
+import blogReducer from "./reducer";
 
 export default configureStore({
-  reducer: reducer,
+  reducer: blogReducer,
 });

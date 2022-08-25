@@ -4,7 +4,7 @@ const initialState = {
   data: "",
   error: "",
 };
-function reducer(state = initialState, action) {
+function blogReducer(state = initialState, action) {
   switch (action.type) {
     case "FETCH_DATA_REQUEST":
       return {
@@ -35,4 +35,4 @@ function reducer(state = initialState, action) {
   }
 }
 
-export default reducer;
+export default blogReducer;
