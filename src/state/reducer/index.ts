@@ -26,7 +26,7 @@ function blogReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        loaded: true,
+        loaded: false,
         data: "",
         error: action.data,
       };

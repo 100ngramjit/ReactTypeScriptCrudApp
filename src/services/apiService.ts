@@ -9,18 +9,18 @@ export const getBlogById = (id) => {
   return axios.get(`${baseURL}/${id}`);
 };
 
-export const EditTodoById = (id, titleText, detailsText) => {
+export const editTodoById = (id, titleText, detailsText) => {
   return axios.put(`${baseURL}/${id}`, {
     title: titleText,
     details: detailsText,
   });
 };
 
-export const DeleteTodoById = (id) => {
+export const deleteTodoById = (id) => {
   return axios.delete(`${baseURL}/${id}`);
 };
 
-export const PostTodo = (todo) => {
+export const postTodo = (todo) => {
   return axios.post(baseURL, {
     title: todo,
   });
@@ -28,11 +28,11 @@ export const PostTodo = (todo) => {
 
 export const getBlogList: any = () => {
   return (dispatch) => {
-    axios.get(baseURL).then((res) =>
+    axios.get(baseURL).then((res) => {
       dispatch({
         type: "FETCH_DATA_SUCCESS",
         data: res.data,
-      })
-    );
+      });
+    });
   };
 };

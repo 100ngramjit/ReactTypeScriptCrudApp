@@ -32,13 +32,11 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm();
 
   let auth = JSON.parse(localStorage.getItem("auth"));
 
-  const handleLogin = () => {
-    const values = getValues();
+  const handleLogin = (values) => {
     if (auth === null) {
       auth = [{ username: "", password: "" }];
     }

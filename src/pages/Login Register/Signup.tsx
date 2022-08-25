@@ -27,36 +27,33 @@ import { URL_DASHBOARD, URL_ROOT } from "constants/urlConstants";
 const Signup = () => {
   const stateProvider = useContext(LoginContext);
   const [username, setUsername] = useState("");
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
+  const [password, setPassword] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm();
-  const [showHideToggle1, setShowHideToggle1] = useState(true);
-  const [showHideToggle2, setShowHideToggle2] = useState(true);
+  const [showHideToggle, setshowHideToggle] = useState(true);
+  const [showHideConfirmPasswordToggle, setShowHideConfirmPasswordToggle] =
+    useState(true);
 
   let auth = JSON.parse(localStorage.getItem("auth"));
 
-  const handleSignup = () => {
+  const handleSignup = (values) => {
     if (auth === null) {
       auth = [{ username: "", password: "" }];
     }
-    const values = getValues();
-    if (values.password1 === values.password2) {
+
+    if (values.password === values.ConfirmPassword) {
       const same = auth.filter((d) => d.username === values.email);
       if (same.length === 0) {
-        auth = [
-          ...auth,
-          { username: values.email, password: values.password1 },
-        ];
+        auth = [...auth, { username: values.email, password: values.password }];
         localStorage.setItem("auth", JSON.stringify(auth));
         localStorage.setItem("userlogined", values.email);
         setUsername("");
-        setPassword1("");
-        setPassword2("");
+        setPassword("");
+        setConfirmPassword("");
         stateProvider.setIsUserLoggedIn(true);
       } else {
         toast.error(values.email + " exist!");
@@ -66,15 +63,11 @@ const Signup = () => {
     }
   };
   const validateForm = () => {
-    return username.length > 0 && password1.length > 0;
+    return username.length > 0 && password.length > 0;
   };
   return (
     <Container>
-      {stateProvider.isUserLoggedIn ? (
-        <Navigate to={URL_DASHBOARD} replace />
-      ) : (
-        ""
-      )}
+      {stateProvider.isUserLoggedIn && <Navigate to={URL_DASHBOARD} replace />}
       <Row className="justify-content-md-center">
         <Col xs={4}>
           <Card
@@ -105,24 +98,24 @@ const Signup = () => {
                 {errors.email && (
                   <p className="text-danger">Please check the Email</p>
                 )}
-                <Form.Group controlId="password1">
+                <Form.Group controlId="password">
                   <Form.Label>{LABEL_PASSWORD}</Form.Label>
                   <InputGroup className="m-2">
                     <Form.Control
-                      type={showHideToggle1 ? "password" : "text"}
-                      onChange={(e) => setPassword1(e.target.value)}
+                      type={showHideToggle ? "password" : "text"}
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="Add password"
-                      {...register("password1", {
+                      {...register("password", {
                         required: true,
                         maxLength: 10,
                       })}
                     />
                     <InputGroup.Text
                       onClick={() => {
-                        setShowHideToggle1(!showHideToggle1);
+                        setshowHideToggle(!showHideToggle);
                       }}
                     >
-                      {showHideToggle1 ? (
+                      {showHideToggle ? (
                         <BsFillEyeFill />
                       ) : (
                         <BsFillEyeSlashFill />
@@ -130,27 +123,29 @@ const Signup = () => {
                     </InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
-                {errors.password1 && (
+                {errors.password && (
                   <p className="text-danger">Please check the Password</p>
                 )}
-                <Form.Group controlId="password2">
+                <Form.Group controlId="ConfirmPassword">
                   <Form.Label>{LABEL_CONIRM_PASSWORD}</Form.Label>
                   <InputGroup className="m-2">
                     <Form.Control
-                      type={showHideToggle2 ? "password" : "text"}
-                      onChange={(e) => setPassword2(e.target.value)}
+                      type={showHideConfirmPasswordToggle ? "password" : "text"}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="Confirm password"
-                      {...register("password2", {
+                      {...register("ConfirmPassword", {
                         required: true,
                         maxLength: 10,
                       })}
                     />
                     <InputGroup.Text
                       onClick={() => {
-                        setShowHideToggle2(!showHideToggle2);
+                        setShowHideConfirmPasswordToggle(
+                          !showHideConfirmPasswordToggle
+                        );
                       }}
                     >
-                      {showHideToggle2 ? (
+                      {showHideConfirmPasswordToggle ? (
                         <BsFillEyeFill />
                       ) : (
                         <BsFillEyeSlashFill />
@@ -158,7 +153,7 @@ const Signup = () => {
                     </InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
-                {errors.password2 && (
+                {errors.ConfirmPassword && (
                   <p className="text-danger">Please check the Password</p>
                 )}
                 <Button type="submit" className="m-2">

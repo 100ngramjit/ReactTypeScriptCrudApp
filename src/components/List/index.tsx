@@ -18,10 +18,10 @@ import {
 } from "constants/Constants";
 import { baseURL } from "api_urls/ApiLinks";
 import {
-  DeleteTodoById,
+  deleteTodoById,
   getBlogs,
-  EditTodoById,
-  PostTodo,
+  editTodoById,
+  postTodo,
 } from "services/apiService";
 import { Link } from "react-router-dom";
 import { Container, Button, Table, Form, InputGroup } from "react-bootstrap";
@@ -58,7 +58,7 @@ const List = () => {
     e.preventDefault();
     if (todo) {
       try {
-        const response = await PostTodo(todo);
+        const response = await postTodo(todo);
         if (response.status === 201) {
           setTodo("");
           getData();
@@ -74,7 +74,7 @@ const List = () => {
 
   const deleteTodo = async (id: number) => {
     try {
-      const response = await DeleteTodoById(id);
+      const response = await deleteTodoById(id);
       if (response.status === 204) {
         getData();
         setDeleteConfirmationModalOpen(false);
@@ -87,7 +87,7 @@ const List = () => {
 
   const editTodo = async (id: number) => {
     try {
-      const response = await EditTodoById(id, titleText, detailsText);
+      const response = await editTodoById(id, titleText, detailsText);
       if (response.status === 200) {
         toast.success("Edited Successfully");
         setIsEditing(null);

@@ -8,7 +8,7 @@ import {
 } from "constants/Constants";
 import { Container, Button, Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
-import { getBlogById, EditTodoById } from "services/apiService";
+import { getBlogById, editTodoById } from "services/apiService";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState({
@@ -35,7 +35,7 @@ const BlogDetails = () => {
   const editTodo = async (item: any) => {
     if (item) {
       try {
-        const response = await EditTodoById(id, titleText, detailsText);
+        const response = await editTodoById(id, titleText, detailsText);
         if (response.status === 200) {
           setIsEditing(false);
           setTitleText("");
