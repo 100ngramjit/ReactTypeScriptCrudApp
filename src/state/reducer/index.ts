@@ -4,7 +4,7 @@ const initialState = {
   data: "",
   error: "",
 };
-function blogReducer(state = initialState, action) {
+function blogReducer(state = initialState, action: { type: any; data: any }) {
   switch (action.type) {
     case "FETCH_DATA_REQUEST":
       return {

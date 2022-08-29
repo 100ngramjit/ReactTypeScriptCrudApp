@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Route, Navigate } from "react-router-dom";
 import { LoginContext } from "context/LoginState";
 
-export const ProtectedRoute = ({ children }) => {
+export const ProtectedRoute = ({ children }: any) => {
   const stateProvider = useContext(LoginContext);
 
   function requireAuth() {

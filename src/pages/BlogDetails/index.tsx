@@ -27,7 +27,7 @@ const BlogDetails = () => {
     try {
       const response = await getBlogById(id);
       setBlog(response.data);
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err);
     }
   };
@@ -56,7 +56,7 @@ const BlogDetails = () => {
   };
 
   useEffect(() => {
-    getBlog(id);
+    id && getBlog(id);
   }, []);
   return (
     <Container>

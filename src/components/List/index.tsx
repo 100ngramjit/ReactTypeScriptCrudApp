@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, SetStateAction } from "react";
 import { toast } from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import SweetAlert from "react-bootstrap-sweetalert";
@@ -27,15 +27,21 @@ import { Link } from "react-router-dom";
 import { Container, Button, Table, Form, InputGroup } from "react-bootstrap";
 import { URL_DASHBOARD } from "constants/urlConstants";
 
+type EditTypes = {
+  id: string;
+};
+
 const List = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([] as any);
   const [todo, setTodo] = useState("");
-  const [isEditing, setIsEditing] = useState(null);
+  const [isEditing, setIsEditing] = useState<EditTypes | null>(null);
   const [titleText, setTitleText] = useState("");
   const [detailsText, setDetailsText] = useState("");
   const [isDeleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
-    useState(null);
-  const [isTodoListLoading, setIsTodoListLoading] = useState(true);
+    useState<EditTypes | null>(null);
+  const [isTodoListLoading, setIsTodoListLoading] = useState<boolean | null>(
+    true
+  );
 
   const getData = async () => {
     try {
@@ -64,7 +70,7 @@ const List = () => {
           getData();
           toast.success("Added successfully");
         }
-      } catch (err) {
+      } catch (err: any) {
         toast.error(err);
       }
     } else {
@@ -72,20 +78,20 @@ const List = () => {
     }
   };
 
-  const deleteTodo = async (id: number) => {
+  const deleteTodo = async (id: string) => {
     try {
       const response = await deleteTodoById(id);
       if (response.status === 204) {
         getData();
-        setDeleteConfirmationModalOpen(false);
+        setDeleteConfirmationModalOpen(null);
         toast.error("Deleted Successfully ");
       }
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err);
     }
   };
 
-  const editTodo = async (id: number) => {
+  const editTodo = async (id: string) => {
     try {
       const response = await editTodoById(id, titleText, detailsText);
       if (response.status === 200) {
@@ -93,12 +99,12 @@ const List = () => {
         setIsEditing(null);
         getData();
       }
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err);
     }
   };
   const handleEditButtonClick = (
-    id: number,
+    id: SetStateAction<EditTypes | null>,
     title: string,
     details: string
   ) => {
@@ -142,7 +148,7 @@ const List = () => {
                 </tr>
               </thead>
               <tbody>
-                {todos.map(({ title, details, id }, index) => (
+                {todos.map(({ title, details, id }: any, index: number) => (
                   <tr key={id}>
                     <td>{index + 1}</td>
                     <td>
@@ -170,7 +176,7 @@ const List = () => {
                       ) : (
                         <>
                           {details &&
-                            (details.length < 50
+                            (details?.length < 50
                               ? details
                               : details.substr(0, 50) + ".....")}
                         </>
@@ -189,7 +195,7 @@ const List = () => {
                             deleteTodo(id);
                           }}
                           onCancel={() => {
-                            setDeleteConfirmationModalOpen(false);
+                            setDeleteConfirmationModalOpen(null);
                           }}
                         />
                       ) : (

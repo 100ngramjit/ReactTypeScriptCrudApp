@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import { createContext } from "react";
 
-const LoginContext = createContext({
-  displayName: "",
-  setIsUserLoggedIn: null,
-  isUserLoggedIn: false,
-});
+type LoginContextType = {
+  displayName: string;
+  isUserLoggedIn: boolean;
+  setIsUserLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const LoginState = ({ children }) => {
-  const displayName = localStorage.getItem("userlogined");
+const LoginContextState = {
+  displayName: "",
+  isUserLoggedIn: false,
+  setIsUserLoggedIn: () => {},
+};
+
+const LoginContext = createContext<LoginContextType>(LoginContextState);
+
+const LoginState = ({ children }: any) => {
+  const displayName = localStorage.getItem("userlogined")!;
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(
     displayName ? true : false
   );

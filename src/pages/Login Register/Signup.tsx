@@ -24,6 +24,12 @@ import { Navigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { URL_DASHBOARD, URL_ROOT } from "constants/urlConstants";
 
+type FormData = {
+  email: string;
+  password: string;
+  ConfirmPassword: string;
+};
+
 const Signup = () => {
   const stateProvider = useContext(LoginContext);
   const [username, setUsername] = useState("");
@@ -33,20 +39,22 @@ const Signup = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
   const [showHideToggle, setshowHideToggle] = useState(true);
   const [showHideConfirmPasswordToggle, setShowHideConfirmPasswordToggle] =
     useState(true);
 
-  let auth = JSON.parse(localStorage.getItem("auth"));
+  let auth = JSON.parse(localStorage.getItem("auth")!);
 
-  const handleSignup = (values) => {
+  const handleSignup = (values: FormData) => {
     if (auth === null) {
       auth = [{ username: "", password: "" }];
     }
 
     if (values.password === values.ConfirmPassword) {
-      const same = auth.filter((d) => d.username === values.email);
+      const same = auth.filter(
+        (d: { username: string }) => d.username === values.email
+      );
       if (same.length === 0) {
         auth = [...auth, { username: values.email, password: values.password }];
         localStorage.setItem("auth", JSON.stringify(auth));
@@ -86,7 +94,6 @@ const Signup = () => {
                   <Form.Label>{LABEL_EMAIL}</Form.Label>
                   <Form.Control
                     type="text"
-                    onChange={(e) => setUsername(e.target.value)}
                     placeholder="Email"
                     className="m-2 p-10"
                     {...register("email", {
@@ -103,7 +110,6 @@ const Signup = () => {
                   <InputGroup className="m-2">
                     <Form.Control
                       type={showHideToggle ? "password" : "text"}
-                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="Add password"
                       {...register("password", {
                         required: true,
@@ -131,7 +137,6 @@ const Signup = () => {
                   <InputGroup className="m-2">
                     <Form.Control
                       type={showHideConfirmPasswordToggle ? "password" : "text"}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="Confirm password"
                       {...register("ConfirmPassword", {
                         required: true,

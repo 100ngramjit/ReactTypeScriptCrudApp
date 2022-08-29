@@ -23,6 +23,10 @@ import { toast } from "react-hot-toast";
 import { Navigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
+type FormData = {
+  email: string;
+  password: string;
+};
 const Login = () => {
   const stateProvider = useContext(LoginContext);
   const [username, setUsername] = useState("");
@@ -32,16 +36,18 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
 
-  let auth = JSON.parse(localStorage.getItem("auth"));
+  let auth = JSON.parse(localStorage.getItem("auth")!);
 
-  const handleLogin = (values) => {
+  const handleLogin = (values: FormData) => {
     if (auth === null) {
       auth = [{ username: "", password: "" }];
     }
 
-    const same = auth.filter((d) => d.username === values.email);
+    const same = auth.filter(
+      (d: { username: string }) => d.username === values.email
+    );
 
     if (same.length !== 0) {
       if (same[0].password === values.password) {
@@ -80,7 +86,6 @@ const Login = () => {
                   <Form.Label>{LABEL_EMAIL}</Form.Label>
                   <Form.Control
                     type="text"
-                    onChange={(e) => setUsername(e.target.value)}
                     placeholder="Email"
                     className="m-1"
                     {...register("email", {
@@ -97,7 +102,6 @@ const Login = () => {
                   <InputGroup className="m-2">
                     <Form.Control
                       type={passType ? "password" : "text"}
-                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="Add password"
                       {...register("password", {
                         required: true,

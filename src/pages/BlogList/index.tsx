@@ -28,7 +28,7 @@ const BlogList = () => {
       <Row xs={1} md={2} lg={3}>
         {!isLoading ? (
           blogs?.data?.data?.map(
-            ({ title, details, id }) =>
+            ({ title, details, id }: any) =>
               details && (
                 <Col key={id}>
                   <Card id="card" bg="dark" text="light">
